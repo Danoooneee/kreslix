@@ -17,6 +17,8 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+const publicAsset = (path) => `${import.meta.env.BASE_URL}${path}`;
+
 const languages = {
   en: "EN",
   uk: "UA"
@@ -35,7 +37,7 @@ const content = {
     close: "Close",
     presentation: {
       label: "Download presentation",
-      href: "/downloads/kreslix.pdf",
+      href: publicAsset("downloads/kreslix.pdf"),
       fileName: "kreslix.pdf"
     },
     hero: {
@@ -165,7 +167,7 @@ const content = {
     close: "Закрити",
     presentation: {
       label: "Завантажити презентацію",
-      href: "/downloads/kreslix.pdf",
+      href: publicAsset("downloads/kreslix.pdf"),
       fileName: "kreslix.pdf"
     },
     hero: {
@@ -373,7 +375,7 @@ function Header({ nav, language, setLanguage, menuOpen, setMenuOpen, openDemo, t
   return (
     <header className={`site-header${scrolled ? " is-scrolled" : ""}`}>
       <a className="brand" href="#top" aria-label="Kreslix home">
-        <img src="/brand/logo.svg" alt="Kreslix" />
+        <img src={publicAsset("brand/logo.svg")} alt="Kreslix" />
       </a>
 
       <nav className="desktop-nav" aria-label="Main navigation">
@@ -653,7 +655,7 @@ function DemoSection({ t, openDemo }) {
       </div>
       <Reveal delay={0.1} className="demo-stage">
         <video ref={videoRef} className="demo-stage-video" muted loop playsInline preload="metadata" aria-label={t.demo.videoLabel}>
-          <source src="/media/kreslix-demo-web.mp4" type="video/mp4" />
+          <source src={publicAsset("media/kreslix-demo-web.mp4")} type="video/mp4" />
         </video>
       </Reveal>
     </section>
@@ -702,7 +704,7 @@ function Footer({ nav, t, openDemo }) {
     <footer className="site-footer">
       <div>
         <a className="footer-brand" href="#top">
-          <img src="/brand/logo.svg" alt="Kreslix" />
+          <img src={publicAsset("brand/logo.svg")} alt="Kreslix" />
         </a>
         <p>AI platform for internal electrical network design.</p>
       </div>

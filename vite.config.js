@@ -107,5 +107,6 @@ function demoApiDevPlugin() {
 }
 
 export default defineConfig({
+  base: process.env.GITHUB_ACTIONS === "true" ? "/kreslix/" : "/",
   plugins: [demoApiDevPlugin(), react(), tailwindcss()]
 });

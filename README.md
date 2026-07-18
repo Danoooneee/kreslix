@@ -15,6 +15,10 @@ pnpm dev
 pnpm build
 ```
 
+## GitHub Pages
+
+Pushes to `main` deploy through `.github/workflows/deploy-pages.yml` with the production base path `/kreslix/`.
+
 ## Telegram demo requests
 
 The frontend posts demo requests to `/api/demo`. Configure these environment variables on your deployment platform:
