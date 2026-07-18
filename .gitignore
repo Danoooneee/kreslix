@@ -1,1 +1,7 @@
+node_modules
+dist
+.pnpm-store
+.env
+.env.local
 .DS_Store
+public/media/kreslix-demo.mp4
