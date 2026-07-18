@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-const publicAsset = (path) => `${import.meta.env.BASE_URL}${path}`;
+const publicAsset = (path) => `${import.meta.env.VITE_STATIC_BASE || import.meta.env.BASE_URL}${path}`;
 
 const languages = {
   en: "EN",

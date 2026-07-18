@@ -17,7 +17,13 @@ pnpm build
 
 ## GitHub Pages
 
-Pushes to `main` deploy through `.github/workflows/deploy-pages.yml` with the production base path `/kreslix/`.
+GitHub Pages publishes the root of `main`. Generate the root production entry and bundled assets before committing:
+
+```bash
+pnpm build:pages
+```
+
+The source application lives in `app/`. Public media stays in `public/` and is referenced directly by the Pages build, avoiding duplicate copies of the video and presentation.
 
 ## Telegram demo requests
 
@@ -53,8 +59,8 @@ public/downloads/kreslix.pdf
 Headings use Grunt Grotesk from:
 
 ```bash
-public/fonts/GruntGrotesk-Bold.otf
-public/fonts/GruntGrotesk-Light.otf
+app/src/fonts/GruntGrotesk-Bold.otf
+app/src/fonts/GruntGrotesk-Light.otf
 ```
 
 Body copy uses the bundled Fixel Text fonts.

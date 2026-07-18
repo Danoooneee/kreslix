@@ -107,6 +107,16 @@ function demoApiDevPlugin() {
 }
 
 export default defineConfig({
-  base: process.env.GITHUB_ACTIONS === "true" ? "/kreslix/" : "/",
+  root: "app",
+  publicDir: "../public",
+  base:
+    process.env.GITHUB_ACTIONS === "true" || process.env.KRESLIX_PAGES === "true"
+      ? "/kreslix/"
+      : "/",
+  build: {
+    outDir: "../dist",
+    emptyOutDir: true,
+    assetsDir: process.env.KRESLIX_PAGES === "true" ? "pages-assets" : "assets"
+  },
   plugins: [demoApiDevPlugin(), react(), tailwindcss()]
 });
