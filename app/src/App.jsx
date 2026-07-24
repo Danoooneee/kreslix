@@ -1093,19 +1093,8 @@ function TextArea({ label, name, value, onChange, placeholder = "", required = f
   );
 }
 
-function Reveal({ children, className = "", delay = 0 }) {
-  const reducedMotion = useReducedMotion();
-  return (
-    <motion.div
-      className={className}
-      initial={reducedMotion ? false : { opacity: 0, y: 18 }}
-      whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, ease: "easeOut", delay }}
-    >
-      {children}
-    </motion.div>
-  );
+function Reveal({ children, className = "" }) {
+  return <div className={className}>{children}</div>;
 }
 
 function HeroBackground({ reducedMotion }) {
