@@ -1,6 +1,7 @@
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
+import { fetchLinkedInPosts } from "./lib/linkedin.js";
 
 const requiredFields = ["name", "company", "email", "bottleneck"];
 
@@ -53,10 +54,34 @@ function readRequestBody(req) {
   });
 }
 
-function demoApiDevPlugin() {
+function apiDevPlugin() {
   return {
-    name: "kreslix-demo-api-dev",
+    name: "kreslix-api-dev",
     configureServer(server) {
+      server.middlewares.use("/api/linkedin-posts", async (req, res) => {
+        if (req.method === "OPTIONS") {
+          res.statusCode = 204;
+          res.end();
+          return;
+        }
+
+        if (req.method !== "GET") {
+          sendJson(res, 405, { ok: false, error: "Method not allowed" });
+          return;
+        }
+
+        try {
+          const feed = await fetchLinkedInPosts({ count: 3 });
+          res.setHeader("Cache-Control", "no-store");
+          sendJson(res, 200, feed);
+        } catch (error) {
+          sendJson(res, Number.isInteger(error.status) ? error.status : 502, {
+            ok: false,
+            error: error.status === 501 ? "LinkedIn is not configured" : "LinkedIn feed is unavailable"
+          });
+        }
+      });
+
       server.middlewares.use("/api/demo", async (req, res) => {
         if (req.method === "OPTIONS") {
           res.statusCode = 204;
@@ -118,5 +143,5 @@ export default defineConfig({
     emptyOutDir: true,
     assetsDir: process.env.KRESLIX_PAGES === "true" ? "pages-assets" : "assets"
   },
-  plugins: [demoApiDevPlugin(), react(), tailwindcss()]
+  plugins: [apiDevPlugin(), react(), tailwindcss()]
 });

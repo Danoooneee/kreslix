@@ -1,11 +1,13 @@
-import { AnimatePresence, motion, useMotionValue, useSpring, useTransform, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import {
   ArrowRight,
+  ArrowUpRight,
   Building2,
   CheckCircle2,
   ClipboardCheck,
-  Download,
+  ExternalLink,
   Gauge,
+  Linkedin,
   Loader2,
   Menu,
   Network,
@@ -18,6 +20,13 @@ import {
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const publicAsset = (path) => `${import.meta.env.VITE_STATIC_BASE || import.meta.env.BASE_URL}${path}`;
+const presentationUrl = "https://drive.google.com/file/d/1qgRQitgBYbfbETDYNzBT8k0ASHTSZtRJ/view?usp=sharing";
+const linkedInUrl = "https://www.linkedin.com/company/kreslix";
+const linkedInFeedEndpoint =
+  import.meta.env.VITE_LINKEDIN_FEED_ENDPOINT ||
+  (import.meta.env.PROD && import.meta.env.BASE_URL !== "/"
+    ? publicAsset("data/linkedin-posts.json")
+    : "/api/linkedin-posts");
 
 const languages = {
   en: "EN",
@@ -36,9 +45,8 @@ const content = {
     cta: "Book a demo",
     close: "Close",
     presentation: {
-      label: "Download presentation",
-      href: publicAsset("downloads/kreslix.pdf"),
-      fileName: "kreslix.pdf"
+      label: "View presentation",
+      href: presentationUrl
     },
     hero: {
       eyebrow: "AI platform for internal electrical network design",
@@ -119,13 +127,33 @@ const content = {
         "The demo shows the product workflow in context: project input, routing generation, engineer review, and the path toward a practical pilot.",
       videoLabel: "Kreslix product demo",
       meta: "Full-screen product walkthrough",
-      detail: "MP4 background / pilot workflow preview"
+      detail: "See Kreslix in action / pilot workflow preview"
+    },
+    linkedin: {
+      eyebrow: "Latest from LinkedIn",
+      title: "Product thinking, pilot insights, and Kreslix updates.",
+      text: "Follow how we are building a more efficient workflow for electrical design teams.",
+      readPost: "Read on LinkedIn",
+      follow: "Follow Kreslix",
+      loading: "Loading the latest posts…",
+      fallback: "The live feed is temporarily unavailable. Visit our LinkedIn page for the latest updates."
     },
     final: {
       eyebrow: "Call to action",
       title: "Book a demo and check if Kreslix fits your workflow.",
       text:
         "Tell us how your team designs internal electrical networks today. We will review your workflow and suggest a practical pilot path."
+    },
+    footer: {
+      label: "Kreslix / electrical design intelligence",
+      title: "Build more. Route less.",
+      description: "AI-assisted workflows for internal electrical network design.",
+      explore: "Explore",
+      connect: "Connect",
+      linkedin: "LinkedIn",
+      privacy: "Privacy policy",
+      backToTop: "Back to top",
+      rights: "All rights reserved."
     },
     form: {
       title: "Book a demo",
@@ -166,9 +194,8 @@ const content = {
     cta: "Book a demo",
     close: "Закрити",
     presentation: {
-      label: "Завантажити презентацію",
-      href: publicAsset("downloads/kreslix.pdf"),
-      fileName: "kreslix.pdf"
+      label: "Відкрити презентацію",
+      href: presentationUrl
     },
     hero: {
       eyebrow: "AI platform for internal electrical network design",
@@ -249,13 +276,33 @@ const content = {
         "Демо показує workflow продукту в контексті: вхідні дані проєкту, генерація трасування, перевірка інженером і шлях до практичного пілоту.",
       videoLabel: "Kreslix product demo",
       meta: "Повноекранний product walkthrough",
-      detail: "MP4 background / preview пілотного workflow"
+      detail: "Kreslix у дії / preview пілотного workflow"
+    },
+    linkedin: {
+      eyebrow: "Останнє з LinkedIn",
+      title: "Продуктові рішення, інсайти з пілотів та новини Kreslix.",
+      text: "Слідкуйте, як ми створюємо ефективніший workflow для команд електропроєктування.",
+      readPost: "Читати в LinkedIn",
+      follow: "Стежити за Kreslix",
+      loading: "Завантажуємо останні пости…",
+      fallback: "Live feed тимчасово недоступний. Перейдіть на сторінку LinkedIn, щоб побачити останні новини."
     },
     final: {
       eyebrow: "Заклик до дії",
       title: "Book a demo і перевірте, чи підходить Kreslix вашому workflow.",
       text:
         "Розкажіть, як ваша команда зараз проєктує внутрішні електромережі. Ми переглянемо workflow і запропонуємо практичний шлях до пілоту."
+    },
+    footer: {
+      label: "Kreslix / intelligence для електропроєктування",
+      title: "Проєктуйте більше. Трасуйте менше.",
+      description: "AI-assisted workflow для проєктування внутрішніх електромереж.",
+      explore: "Навігація",
+      connect: "Зв’язок",
+      linkedin: "LinkedIn",
+      privacy: "Privacy policy",
+      backToTop: "На початок",
+      rights: "Усі права захищені."
     },
     form: {
       title: "Book a demo",
@@ -330,6 +377,7 @@ function App() {
         <ProblemSection t={t} />
         <BenefitsSection t={t} />
         <DemoSection t={t} openDemo={() => setDemoOpen(true)} />
+        <LinkedInSection t={t} language={language} />
         <FinalCTA t={t} openDemo={() => setDemoOpen(true)} />
       </main>
       <Footer nav={nav} t={t} openDemo={() => setDemoOpen(true)} />
@@ -431,39 +479,9 @@ function Header({ nav, language, setLanguage, menuOpen, setMenuOpen, openDemo, t
 }
 
 function Hero({ t, openDemo, reducedMotion }) {
-  const pointerX = useMotionValue(0.62);
-  const pointerY = useMotionValue(0.42);
-  const springX = useSpring(pointerX, { stiffness: 90, damping: 24, mass: 0.65 });
-  const springY = useSpring(pointerY, { stiffness: 90, damping: 24, mass: 0.65 });
-  const mapX = useTransform(springX, [0, 1], [18, -18]);
-  const mapY = useTransform(springY, [0, 1], [10, -10]);
-  const nodeX = useTransform(springX, [0, 1], [-8, 8]);
-  const nodeY = useTransform(springY, [0, 1], [-5, 5]);
-
-  const handlePointerMove = (event) => {
-    if (reducedMotion) {
-      return;
-    }
-
-    const rect = event.currentTarget.getBoundingClientRect();
-    pointerX.set(Math.min(1, Math.max(0, (event.clientX - rect.left) / rect.width)));
-    pointerY.set(Math.min(1, Math.max(0, (event.clientY - rect.top) / rect.height)));
-  };
-
-  const handlePointerLeave = () => {
-    pointerX.set(0.62);
-    pointerY.set(0.42);
-  };
-
   return (
-    <section id="top" className="hero-section" onPointerMove={handlePointerMove} onPointerLeave={handlePointerLeave}>
-      <HeroBackground
-        reducedMotion={reducedMotion}
-        mapX={mapX}
-        mapY={mapY}
-        nodeX={nodeX}
-        nodeY={nodeY}
-      />
+    <section id="top" className="hero-section">
+      <HeroBackground reducedMotion={reducedMotion} />
       <Reveal className="hero-copy">
         <p className="eyebrow">{t.hero.eyebrow}</p>
         <h1>{t.hero.title}</h1>
@@ -477,8 +495,8 @@ function Hero({ t, openDemo, reducedMotion }) {
             <Play size={18} aria-hidden="true" />
             Demo video
           </a>
-          <a className="secondary-button" href={t.presentation.href} download={t.presentation.fileName}>
-            <Download size={18} aria-hidden="true" />
+          <a className="secondary-button" href={t.presentation.href} target="_blank" rel="noreferrer">
+            <ExternalLink size={18} aria-hidden="true" />
             {t.presentation.label}
           </a>
         </div>
@@ -646,8 +664,8 @@ function DemoSection({ t, openDemo }) {
               {t.cta}
               <ArrowRight size={18} aria-hidden="true" />
             </button>
-            <a className="secondary-button" href={t.presentation.href} download={t.presentation.fileName}>
-              <Download size={18} aria-hidden="true" />
+            <a className="secondary-button" href={t.presentation.href} target="_blank" rel="noreferrer">
+              <ExternalLink size={18} aria-hidden="true" />
               {t.presentation.label}
             </a>
           </div>
@@ -658,6 +676,102 @@ function DemoSection({ t, openDemo }) {
           <source src={publicAsset("media/kreslix-demo-web.mp4")} type="video/mp4" />
         </video>
       </Reveal>
+    </section>
+  );
+}
+
+function LinkedInSection({ t, language }) {
+  const [posts, setPosts] = useState([]);
+  const [status, setStatus] = useState("loading");
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadPosts() {
+      try {
+        const response = await fetch(linkedInFeedEndpoint, {
+          headers: { Accept: "application/json" },
+          signal: controller.signal
+        });
+
+        if (!response.ok) {
+          throw new Error("LinkedIn feed is unavailable");
+        }
+
+        const data = await response.json();
+        const nextPosts = Array.isArray(data.posts) ? data.posts.slice(0, 3) : [];
+        setPosts(nextPosts);
+        setStatus(nextPosts.length ? "ready" : "empty");
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          setStatus("error");
+        }
+      }
+    }
+
+    loadPosts();
+    return () => controller.abort();
+  }, []);
+
+  const formatDate = (timestamp) =>
+    new Intl.DateTimeFormat(language === "uk" ? "uk-UA" : "en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    }).format(new Date(timestamp));
+
+  return (
+    <section id="linkedin" className="section linkedin-section">
+      <div className="section-inner">
+        <div className="linkedin-heading">
+          <SectionHeader eyebrow={t.linkedin.eyebrow} title={t.linkedin.title} text={t.linkedin.text} />
+          <a className="linkedin-follow" href={linkedInUrl} target="_blank" rel="noreferrer">
+            <Linkedin size={18} aria-hidden="true" />
+            {t.linkedin.follow}
+            <ArrowUpRight size={17} aria-hidden="true" />
+          </a>
+        </div>
+
+        {status === "loading" && (
+          <div className="linkedin-loading" role="status">
+            <Loader2 className="spin" size={18} aria-hidden="true" />
+            {t.linkedin.loading}
+          </div>
+        )}
+
+        {status === "ready" && (
+          <div className="linkedin-grid">
+            {posts.map((post, index) => (
+              <Reveal className="linkedin-card-wrap" delay={index * 0.05} key={post.id}>
+                <article className="linkedin-card">
+                  <div className="linkedin-card-top">
+                    <span className="linkedin-mark">
+                      <Linkedin size={18} aria-hidden="true" />
+                    </span>
+                    <time dateTime={new Date(post.publishedAt).toISOString()}>{formatDate(post.publishedAt)}</time>
+                  </div>
+                  <p>{post.text}</p>
+                  <a href={post.url} target="_blank" rel="noreferrer" aria-label={`${t.linkedin.readPost}: ${post.text}`}>
+                    {t.linkedin.readPost}
+                    <ArrowUpRight size={17} aria-hidden="true" />
+                  </a>
+                </article>
+              </Reveal>
+            ))}
+          </div>
+        )}
+
+        {(status === "error" || status === "empty") && (
+          <div className="linkedin-fallback">
+            <Linkedin size={24} aria-hidden="true" />
+            <p>{t.linkedin.fallback}</p>
+            <a href={linkedInUrl} target="_blank" rel="noreferrer">
+              {t.linkedin.follow}
+              <ArrowUpRight size={17} aria-hidden="true" />
+            </a>
+          </div>
+        )}
+      </div>
     </section>
   );
 }
@@ -675,8 +789,8 @@ function FinalCTA({ t, openDemo }) {
               {t.cta}
               <ArrowRight size={18} aria-hidden="true" />
             </button>
-            <a className="secondary-button" href={t.presentation.href} download={t.presentation.fileName}>
-              <Download size={18} aria-hidden="true" />
+            <a className="secondary-button" href={t.presentation.href} target="_blank" rel="noreferrer">
+              <ExternalLink size={18} aria-hidden="true" />
               {t.presentation.label}
             </a>
           </div>
@@ -700,23 +814,68 @@ function SectionHeader({ eyebrow, title, text }) {
 }
 
 function Footer({ nav, t, openDemo }) {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="site-footer">
-      <div>
-        <a className="footer-brand" href="#top">
-          <img src={publicAsset("brand/logo.svg")} alt="Kreslix" />
-        </a>
-        <p>AI platform for internal electrical network design.</p>
+      <div className="footer-signal" aria-hidden="true">
+        <span />
+        <span />
+        <span />
       </div>
-      <div className="footer-links">
-        {nav.map((item) => (
-          <a href={item.href} key={item.href}>
-            {item.label}
-          </a>
-        ))}
-        <button type="button" onClick={openDemo}>
+
+      <div className="footer-statement">
+        <p>{t.footer.label}</p>
+        <h2>{t.footer.title}</h2>
+        <button className="primary-button" type="button" onClick={openDemo}>
           {t.cta}
+          <ArrowRight size={18} aria-hidden="true" />
         </button>
+      </div>
+
+      <div className="footer-main">
+        <div className="footer-brand-block">
+          <a className="footer-brand" href="#top">
+            <img src={publicAsset("brand/logo.svg")} alt="Kreslix" />
+          </a>
+          <p>{t.footer.description}</p>
+        </div>
+
+        <nav className="footer-column" aria-label={t.footer.explore}>
+          <strong>{t.footer.explore}</strong>
+          {nav.map((item) => (
+            <a href={item.href} key={item.href}>
+              {item.label}
+            </a>
+          ))}
+          <a href="#linkedin">{t.linkedin.eyebrow}</a>
+        </nav>
+
+        <div className="footer-column footer-connect">
+          <strong>{t.footer.connect}</strong>
+          <a className="footer-linkedin" href={linkedInUrl} target="_blank" rel="noreferrer">
+            <span>
+              <Linkedin size={18} aria-hidden="true" />
+              {t.footer.linkedin}
+            </span>
+            <ArrowUpRight size={18} aria-hidden="true" />
+          </a>
+          <button type="button" onClick={openDemo}>
+            {t.cta}
+            <ArrowRight size={16} aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
+      <div className="footer-bottom">
+        <p>© {year} Kreslix. {t.footer.rights}</p>
+        <div>
+          <a href={publicAsset("privacy.html")}>{t.footer.privacy}</a>
+          <a href="#top">
+            {t.footer.backToTop}
+            <ArrowUpRight size={15} aria-hidden="true" />
+          </a>
+        </div>
       </div>
     </footer>
   );
@@ -927,65 +1086,178 @@ function Reveal({ children, className = "", delay = 0 }) {
   );
 }
 
-function HeroBackground({ reducedMotion, mapX, mapY, nodeX, nodeY }) {
+function HeroBackground({ reducedMotion }) {
+  const canvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const hero = canvas?.closest(".hero-section");
+    const context = canvas?.getContext("2d");
+
+    if (!canvas || !hero || !context) {
+      return undefined;
+    }
+
+    let width = 0;
+    let height = 0;
+    let nodes = [];
+    let animationFrame = 0;
+    let isVisible = true;
+    const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+    const pointer = { x: -9999, y: -9999, active: false };
+    const linkDistance = 130;
+    const pointerRadius = 190;
+
+    const buildNodes = () => {
+      const count = Math.floor(Math.min(Math.max((width * height) / 13000, 40), 120));
+      nodes = Array.from({ length: count }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        radius: Math.random() * 1.6 + 0.7
+      }));
+    };
+
+    const draw = (updateNodes = true) => {
+      context.clearRect(0, 0, width, height);
+
+      nodes.forEach((node) => {
+        if (!updateNodes) return;
+
+        node.x += node.vx;
+        node.y += node.vy;
+
+        if (node.x < 0 || node.x > width) node.vx *= -1;
+        if (node.y < 0 || node.y > height) node.vy *= -1;
+
+        if (pointer.active) {
+          const dx = node.x - pointer.x;
+          const dy = node.y - pointer.y;
+          const distance = Math.hypot(dx, dy);
+
+          if (distance < pointerRadius && distance > 0.01) {
+            const push = (1 - distance / pointerRadius) * 0.9;
+            node.x += (dx / distance) * push;
+            node.y += (dy / distance) * push;
+          }
+        }
+      });
+
+      for (let first = 0; first < nodes.length; first += 1) {
+        for (let second = first + 1; second < nodes.length; second += 1) {
+          const a = nodes[first];
+          const b = nodes[second];
+          const distance = Math.hypot(a.x - b.x, a.y - b.y);
+
+          if (distance < linkDistance) {
+            context.strokeStyle = `rgba(184,247,255,${((1 - distance / linkDistance) * 0.5).toFixed(3)})`;
+            context.lineWidth = 1;
+            context.beginPath();
+            context.moveTo(a.x, a.y);
+            context.lineTo(b.x, b.y);
+            context.stroke();
+          }
+        }
+      }
+
+      if (pointer.active) {
+        nodes.forEach((node) => {
+          const distance = Math.hypot(node.x - pointer.x, node.y - pointer.y);
+
+          if (distance < pointerRadius) {
+            context.strokeStyle = `rgba(204,255,0,${((1 - distance / pointerRadius) * 0.5).toFixed(3)})`;
+            context.lineWidth = 1;
+            context.beginPath();
+            context.moveTo(node.x, node.y);
+            context.lineTo(pointer.x, pointer.y);
+            context.stroke();
+          }
+        });
+      }
+
+      nodes.forEach((node) => {
+        const isNearPointer =
+          pointer.active && Math.hypot(node.x - pointer.x, node.y - pointer.y) < pointerRadius;
+        context.beginPath();
+        context.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+        context.fillStyle = isNearPointer ? "rgba(204,255,0,0.9)" : "rgba(184,247,255,0.55)";
+        context.fill();
+      });
+    };
+
+    const frame = () => {
+      draw(true);
+      animationFrame = window.requestAnimationFrame(frame);
+    };
+
+    const stop = () => {
+      if (animationFrame) {
+        window.cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+      }
+    };
+
+    const start = () => {
+      if (!reducedMotion && isVisible && !animationFrame) {
+        animationFrame = window.requestAnimationFrame(frame);
+      }
+    };
+
+    const resize = () => {
+      const rect = hero.getBoundingClientRect();
+      width = rect.width;
+      height = rect.height;
+      canvas.width = Math.round(width * pixelRatio);
+      canvas.height = Math.round(height * pixelRatio);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+      buildNodes();
+      draw(false);
+    };
+
+    const handlePointerMove = (event) => {
+      if (reducedMotion || event.pointerType === "touch") return;
+      const rect = hero.getBoundingClientRect();
+      pointer.x = event.clientX - rect.left;
+      pointer.y = event.clientY - rect.top;
+      pointer.active = true;
+    };
+
+    const handlePointerLeave = () => {
+      pointer.active = false;
+      pointer.x = -9999;
+      pointer.y = -9999;
+    };
+
+    const resizeObserver = new ResizeObserver(resize);
+    const visibilityObserver = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+      if (isVisible) start();
+      else stop();
+    });
+
+    resize();
+    resizeObserver.observe(hero);
+    visibilityObserver.observe(hero);
+    hero.addEventListener("pointermove", handlePointerMove, { passive: true });
+    hero.addEventListener("pointerleave", handlePointerLeave);
+    start();
+
+    return () => {
+      stop();
+      resizeObserver.disconnect();
+      visibilityObserver.disconnect();
+      hero.removeEventListener("pointermove", handlePointerMove);
+      hero.removeEventListener("pointerleave", handlePointerLeave);
+    };
+  }, [reducedMotion]);
+
   return (
     <div className="hero-background" aria-hidden="true">
-      <motion.div
-        className="hero-scan"
-        animate={reducedMotion ? undefined : { x: ["-15%", "115%"] }}
-        transition={{ duration: 7.5, ease: "linear", repeat: Infinity }}
-      />
-      <motion.svg className="hero-node-field" viewBox="0 0 1200 760" preserveAspectRatio="none" style={{ x: nodeX, y: nodeY }}>
-        <path className="system-backbone" d="M84 606H262V526H420V448H626V368H770V274H1038" />
-        <path className="system-backbone soft" d="M142 182H326V246H520V190H748V246H1092" />
-        <path className="system-backbone soft" d="M1018 94V214H930V394H1048V662" />
-        <rect className="system-panel" x="910" y="338" width="86" height="112" rx="3" />
-        <rect className="system-panel" x="278" y="488" width="72" height="88" rx="3" />
-        <rect className="system-panel" x="676" y="206" width="88" height="72" rx="3" />
-        {[262, 420, 626, 770, 326, 520, 748, 930, 1048].map((cx, index) => (
-          <circle
-            className="system-node"
-            cx={cx}
-            cy={[526, 448, 368, 274, 246, 190, 246, 394, 662][index]}
-            r={index % 3 === 0 ? "7" : "5"}
-            key={`${cx}-${index}`}
-          />
-        ))}
-      </motion.svg>
-      <motion.svg className="hero-routing-map" viewBox="0 0 1200 760" preserveAspectRatio="none" style={{ x: mapX, y: mapY }}>
-        <defs>
-          <linearGradient id="routeGradient" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0%" stopColor="rgba(204,255,0,0)" />
-            <stop offset="42%" stopColor="rgba(204,255,0,0.78)" />
-            <stop offset="100%" stopColor="rgba(24,216,245,0.12)" />
-          </linearGradient>
-        </defs>
-        <path className="floor-outline" d="M82 138H430V92H704V162H1100V612H838V674H460V604H82Z" />
-        <path className="floor-outline soft" d="M222 234H515V188H706V258H962V492H735V548H392V488H222Z" />
-        <path className="floor-partition" d="M430 138V604M704 162V612M838 258V674M222 492H962M515 234V548M82 370H430M704 338H1100" />
-        <path className="service-zone" d="M884 208H1038V320H884ZM604 492H784V604H604ZM248 274H392V390H248Z" />
-        <motion.path
-          className="pulse-route"
-          d="M108 518H290C362 518 374 442 446 442H650C732 442 742 338 824 338H1080"
-          stroke="url(#routeGradient)"
-          pathLength="1"
-          initial={false}
-          animate={reducedMotion ? undefined : { strokeDashoffset: [1, 0] }}
-          transition={{ duration: 5.4, ease: "linear", repeat: Infinity }}
-        />
-        <motion.path
-          className="pulse-route secondary"
-          d="M170 172H352C438 172 438 288 526 288H700C790 288 792 214 884 214H1124"
-          stroke="rgba(204,255,0,0.46)"
-          pathLength="1"
-          initial={false}
-          animate={reducedMotion ? undefined : { strokeDashoffset: [1, 0] }}
-          transition={{ duration: 7.2, ease: "linear", repeat: Infinity, delay: 0.7 }}
-        />
-        {[108, 446, 824, 352, 700, 884].map((cx, index) => (
-          <circle className="map-node" cx={cx} cy={index < 3 ? [518, 442, 338][index] : [172, 288, 214][index - 3]} r="6" key={cx} />
-        ))}
-      </motion.svg>
+      <canvas className="hero-nexus" ref={canvasRef} />
+      <div className="hero-nexus-glow" />
     </div>
   );
 }
