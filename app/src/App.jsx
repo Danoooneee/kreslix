@@ -35,6 +35,13 @@ const languages = {
 
 const content = {
   en: {
+    accessibility: {
+      home: "Kreslix home",
+      navigation: "Main navigation",
+      mobileNavigation: "Mobile navigation",
+      openMenu: "Open menu",
+      closeMenu: "Close menu"
+    },
     nav: [
       { label: "Product", href: "#product" },
       { label: "For whom", href: "#audience" },
@@ -43,6 +50,7 @@ const content = {
       { label: "Demo", href: "#demo" }
     ],
     cta: "Book a demo",
+    demoVideo: "Demo video",
     close: "Close",
     presentation: {
       label: "View presentation",
@@ -156,6 +164,7 @@ const content = {
       rights: "All rights reserved."
     },
     form: {
+      eyebrow: "Kreslix demo",
       title: "Book a demo",
       intro: "Share a few details about your current design workflow. We will review it before contacting you.",
       fields: {
@@ -184,6 +193,13 @@ const content = {
     }
   },
   uk: {
+    accessibility: {
+      home: "На головну Kreslix",
+      navigation: "Головна навігація",
+      mobileNavigation: "Мобільна навігація",
+      openMenu: "Відкрити меню",
+      closeMenu: "Закрити меню"
+    },
     nav: [
       { label: "Продукт", href: "#product" },
       { label: "Для кого", href: "#audience" },
@@ -191,43 +207,44 @@ const content = {
       { label: "Переваги", href: "#benefits" },
       { label: "Демо", href: "#demo" }
     ],
-    cta: "Book a demo",
+    cta: "Замовити демо",
+    demoVideo: "Переглянути демо",
     close: "Закрити",
     presentation: {
       label: "Відкрити презентацію",
       href: presentationUrl
     },
     hero: {
-      eyebrow: "AI platform for internal electrical network design",
+      eyebrow: "AI-платформа для проєктування внутрішніх електромереж",
       title: "Проєктуйте внутрішні електромережі швидше.",
       lead:
         "Kreslix допомагає інжиніринговим командам автоматизувати проєктування внутрішніх електромереж, зменшити повторюване трасування й залишити ключові рішення під контролем інженера.",
-      proof: "Створено для реальних workflow електропроєктування, пілотного тестування та подальшої співпраці з клієнтом."
+      proof: "Створено для реальних процесів електропроєктування, пілотного тестування та довгострокової співпраці."
     },
     product: {
       eyebrow: "Короткий опис продукту",
-      title: "Kreslix — AI platform for internal electrical network design.",
+      title: "Kreslix — AI-платформа для проєктування внутрішніх електромереж.",
       text:
-        "Платформа допомагає інжиніринговим компаніям у найбільш повторюваних частинах електропроєктування: аналізі проєктного контексту, генерації логіки трасування, перевірці результату та підготовці workflow, який можна повторювати в наступних проєктах.",
+        "Платформа допомагає інжиніринговим компаніям автоматизувати найбільш повторювані етапи електропроєктування: аналіз проєктного контексту, побудову логіки трасування, перевірку результатів і підготовку процесу, який можна повторювати в наступних проєктах.",
       cards: [
-        "AI-assisted routing для внутрішніх електромереж",
-        "Перевірка інженером перед критичними рішеннями",
-        "Workflow навколо реального пілоту, а не абстрактної презентації"
+        "Трасування внутрішніх електромереж за допомогою AI",
+        "Інженерна перевірка перед ухваленням критичних рішень",
+        "Робочий процес на основі реального пілотного проєкту, а не абстрактної демонстрації"
       ]
     },
     audience: {
       eyebrow: "Для кого рішення",
-      title: "Для інжинірингових команд, яким потрібна більша проєктна потужність.",
+      title: "Для інжинірингових команд, яким потрібно виконувати більше проєктів.",
       lead:
-        "Kreslix створений для компаній, які вже виконують проєкти електромереж і хочуть масштабувати delivery без втрати контролю над якістю.",
+        "Kreslix створено для компаній, які вже проєктують електромережі й хочуть збільшити обсяг робіт без втрати контролю над якістю.",
       items: [
         {
           title: "Директори інжинірингових компаній",
-          text: "Потрібно збільшити пропускну здатність, брати більше проєктів і зрозуміти, чи може AI дати вимірювану бізнес-цінність."
+          text: "Прагнуть збільшити продуктивність команди, брати більше проєктів і зрозуміти, чи може AI створити вимірювану цінність для бізнесу."
         },
         {
-          title: "Project leads",
-          text: "Потрібні прогнозовані workflow, менше повторюваних правок і ясність у тому, де команда втрачає час."
+          title: "Керівники проєктів",
+          text: "Потребують передбачуваних процесів, меншої кількості повторних правок і чіткого розуміння, де команда втрачає час."
         },
         {
           title: "Інженери-електрики",
@@ -242,30 +259,30 @@ const content = {
         "Проєктування внутрішніх електромереж досі тримається на повторюваних CAD/BIM діях, ручному трасуванні, перевірках і проєктній логіці, яка часто живе в голові окремого інженера. Через це складно масштабувати обсяг проєктів без розширення команди або ризику для якості.",
       points: [
         "Забагато повторюваного трасування й перекреслення",
-        "Складно масштабувати delivery без найму нових інженерів",
+        "Складно збільшувати обсяг робіт без найму нових інженерів",
         "Контроль якості залежить від ручної перевірки на кожному етапі",
         "Проєктні знання важко повторно використати в схожих будівлях"
       ]
     },
     benefits: {
       eyebrow: "Ключові переваги",
-      title: "Швидший workflow із вбудованим контролем інженера.",
+      title: "Швидший процес із вбудованим інженерним контролем.",
       items: [
         {
           title: "Менше повторюваної роботи",
-          text: "Перенесіть рутинне трасування з ручного креслення в AI-assisted workflow."
+          text: "Перенесіть рутинне трасування з ручного креслення в процес із підтримкою AI."
         },
         {
           title: "Інженер зберігає контроль",
           text: "Команда перевіряє, коригує й погоджує критичні результати перед рухом далі."
         },
         {
-          title: "Валідація через пілот",
-          text: "Почніть з одного реального workflow і виміряйте, чи має автоматизація бізнес-сенс."
+          title: "Перевірка на пілотному проєкті",
+          text: "Почніть з одного реального процесу й виміряйте, чи дає автоматизація практичну цінність для бізнесу."
         },
         {
-          title: "Повторюваний delivery",
-          text: "Перетворюйте проєктну логіку, правки та QA/QC сигнали на процес, який покращується з часом."
+          title: "Відтворюваний процес",
+          text: "Перетворюйте проєктну логіку, правки та результати перевірок на процес, який удосконалюється з часом."
         }
       ]
     },
@@ -273,42 +290,43 @@ const content = {
       eyebrow: "Демонстрація продукту",
       title: "Подивіться, як Kreslix підтримує проєктування електромереж.",
       text:
-        "Демо показує workflow продукту в контексті: вхідні дані проєкту, генерація трасування, перевірка інженером і шлях до практичного пілоту.",
-      videoLabel: "Kreslix product demo",
-      meta: "Повноекранний product walkthrough",
-      detail: "Kreslix у дії / preview пілотного workflow"
+        "Демо показує весь процес у контексті: вхідні дані проєкту, побудову трасування, інженерну перевірку та перехід до практичного пілоту.",
+      videoLabel: "Демонстрація продукту Kreslix",
+      meta: "Повноекранна демонстрація продукту",
+      detail: "Kreslix у дії — огляд пілотного процесу"
     },
     linkedin: {
       eyebrow: "Останнє з LinkedIn",
       title: "Продуктові рішення, інсайти з пілотів та новини Kreslix.",
-      text: "Слідкуйте, як ми створюємо ефективніший workflow для команд електропроєктування.",
+      text: "Стежте за тим, як ми створюємо ефективніші процеси для команд електропроєктування.",
       readPost: "Читати в LinkedIn",
       follow: "Стежити за Kreslix",
       loading: "Завантажуємо останні пости…",
-      fallback: "Live feed тимчасово недоступний. Перейдіть на сторінку LinkedIn, щоб побачити останні новини."
+      fallback: "Стрічка тимчасово недоступна. Перейдіть на нашу сторінку в LinkedIn, щоб переглянути останні новини."
     },
     final: {
       eyebrow: "Заклик до дії",
-      title: "Book a demo і перевірте, чи підходить Kreslix вашому workflow.",
+      title: "Замовте демо та перевірте, чи підходить Kreslix вашим робочим процесам.",
       text:
-        "Розкажіть, як ваша команда зараз проєктує внутрішні електромережі. Ми переглянемо workflow і запропонуємо практичний шлях до пілоту."
+        "Розкажіть, як ваша команда зараз проєктує внутрішні електромережі. Ми проаналізуємо ваш процес і запропонуємо практичний шлях до пілотного проєкту."
     },
     footer: {
-      label: "Kreslix / intelligence для електропроєктування",
+      label: "Kreslix / інтелектуальне електропроєктування",
       title: "Проєктуйте більше. Трасуйте менше.",
-      description: "AI-assisted workflow для проєктування внутрішніх електромереж.",
+      description: "Проєктування внутрішніх електромереж із підтримкою AI.",
       explore: "Навігація",
       connect: "Зв’язок",
       linkedin: "LinkedIn",
-      privacy: "Privacy policy",
+      privacy: "Політика конфіденційності",
       backToTop: "На початок",
       rights: "Усі права захищені."
     },
     form: {
-      title: "Book a demo",
-      intro: "Залиште кілька деталей про поточний workflow. Ми переглянемо їх перед тим, як зв'язатись із вами.",
+      eyebrow: "Демо Kreslix",
+      title: "Замовити демо",
+      intro: "Розкажіть кілька деталей про ваш поточний робочий процес. Ми ознайомимося з ними перед тим, як зв’язатися з вами.",
       fields: {
-        name: "Ім'я",
+        name: "Ім’я",
         company: "Компанія",
         role: "Роль",
         email: "Email",
@@ -321,15 +339,15 @@ const content = {
       },
       placeholders: {
         projects: "Наприклад: 2-3 житлові проєкти",
-        tools: "AutoCAD, Revit, BIM workflow...",
+        tools: "AutoCAD, Revit, BIM-процеси...",
         bottleneck: "Ручне трасування, QA/QC, перекреслення, документація...",
         pilot: "Який результат зробить пілот вартим часу команди?"
       },
-      submit: "Request demo",
-      sending: "Відправляємо",
-      success: "Дякуємо. Ми отримали заявку й повернемось із пропозицією демо.",
-      error: "Заявку поки не вдалось відправити. Перевірте Telegram configuration або спробуйте пізніше.",
-      required: "Заповніть обов'язкові поля."
+      submit: "Надіслати запит",
+      sending: "Надсилаємо",
+      success: "Дякуємо. Ми отримали заявку й незабаром зв’яжемося з вами щодо демонстрації.",
+      error: "Не вдалося надіслати заявку. Спробуйте ще раз пізніше або зв’яжіться з нами через LinkedIn.",
+      required: "Заповніть усі обов’язкові поля."
     }
   }
 };
@@ -390,6 +408,10 @@ function Header({ nav, language, setLanguage, menuOpen, setMenuOpen, openDemo, t
   const [scrolled, setScrolled] = useState(false);
   const scrolledRef = useRef(false);
   const goToAnchor = () => setMenuOpen(false);
+  const openDemoFromMenu = () => {
+    setMenuOpen(false);
+    openDemo();
+  };
 
   useEffect(() => {
     let frameId = 0;
@@ -422,11 +444,11 @@ function Header({ nav, language, setLanguage, menuOpen, setMenuOpen, openDemo, t
 
   return (
     <header className={`site-header${scrolled ? " is-scrolled" : ""}`}>
-      <a className="brand" href="#top" aria-label="Kreslix home">
+      <a className="brand" href="#top" aria-label={t.accessibility.home}>
         <img src={publicAsset("brand/logo.svg")} alt="Kreslix" />
       </a>
 
-      <nav className="desktop-nav" aria-label="Main navigation">
+      <nav className="desktop-nav" aria-label={t.accessibility.navigation}>
         {nav.map((item) => (
           <a key={item.href} href={item.href}>
             {item.label}
@@ -444,7 +466,7 @@ function Header({ nav, language, setLanguage, menuOpen, setMenuOpen, openDemo, t
         <button
           className="menu-toggle"
           type="button"
-          aria-label="Open menu"
+          aria-label={menuOpen ? t.accessibility.closeMenu : t.accessibility.openMenu}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((value) => !value)}
         >
@@ -460,14 +482,14 @@ function Header({ nav, language, setLanguage, menuOpen, setMenuOpen, openDemo, t
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -12 }}
             transition={{ duration: 0.18 }}
-            aria-label="Mobile navigation"
+            aria-label={t.accessibility.mobileNavigation}
           >
             {nav.map((item) => (
               <a key={item.href} href={item.href} onClick={goToAnchor}>
                 {item.label}
               </a>
             ))}
-            <button type="button" onClick={openDemo}>
+            <button type="button" onClick={openDemoFromMenu}>
               {t.cta}
               <ArrowRight size={16} aria-hidden="true" />
             </button>
@@ -493,7 +515,7 @@ function Hero({ t, openDemo, reducedMotion }) {
           </button>
           <a className="secondary-button" href="#demo">
             <Play size={18} aria-hidden="true" />
-            Demo video
+            {t.demoVideo}
           </a>
           <a className="secondary-button" href={t.presentation.href} target="_blank" rel="noreferrer">
             <ExternalLink size={18} aria-hidden="true" />
@@ -976,7 +998,7 @@ function DemoForm({ t, language, titleId, compact = false }) {
   return (
     <form className={`demo-form ${compact ? "compact-form" : ""}`} onSubmit={submitForm}>
       <div className="form-head">
-        <p className="eyebrow">Kreslix demo</p>
+        <p className="eyebrow">{t.form.eyebrow}</p>
         <h2 id={titleId}>{t.form.title}</h2>
         <p>{t.form.intro}</p>
       </div>

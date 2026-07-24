@@ -100,7 +100,7 @@ html {
 
 body {
   margin: 0;
-  min-width: 320px;
+  min-width: 0;
   min-height: 100vh;
   background: #060703;
 }
@@ -150,7 +150,9 @@ h2,
 h3 {
   font-family: var(--heading-font);
   letter-spacing: 0;
-  overflow-wrap: break-word;
+  hyphens: none;
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 h1 {
@@ -596,21 +598,21 @@ textarea:focus-visible {
 
 .product-section {
   background:
-    linear-gradient(180deg, transparent 0%, rgba(7, 9, 5, 0.5) 18%, rgba(7, 9, 5, 0.5) 82%, transparent 100%),
-    linear-gradient(105deg, rgba(204, 255, 0, 0.045), transparent 31%);
+    radial-gradient(circle at 12% 24%, rgba(204, 255, 0, 0.055), transparent 34%),
+    #080a06;
 }
 
 .section-muted {
   background:
-    linear-gradient(180deg, transparent 0%, rgba(11, 13, 9, 0.64) 16%, rgba(11, 13, 9, 0.64) 84%, transparent 100%),
-    linear-gradient(115deg, rgba(24, 216, 245, 0.045), transparent 32%, rgba(204, 255, 0, 0.025) 76%, transparent);
+    radial-gradient(circle at 88% 20%, rgba(24, 216, 245, 0.045), transparent 34%),
+    #080a06;
 }
 
 .problem-section {
   background:
-    linear-gradient(180deg, transparent 0%, rgba(6, 8, 5, 0.5) 18%, rgba(6, 8, 5, 0.5) 82%, transparent 100%),
-    linear-gradient(250deg, rgba(255, 112, 73, 0.035), transparent 28%),
-    linear-gradient(110deg, transparent 60%, rgba(204, 255, 0, 0.028));
+    radial-gradient(circle at 84% 22%, rgba(255, 112, 73, 0.035), transparent 30%),
+    radial-gradient(circle at 14% 78%, rgba(204, 255, 0, 0.035), transparent 34%),
+    #080a06;
 }
 
 .section-inner {
@@ -734,8 +736,8 @@ textarea:focus-visible {
   overflow: clip;
   background:
     radial-gradient(circle at 84% 18%, rgba(204, 255, 0, 0.12), transparent 30%),
-    linear-gradient(180deg, transparent 0%, rgba(3, 4, 2, 0.9) 12%, rgba(3, 4, 2, 0.9) 88%, transparent 100%),
-    linear-gradient(180deg, rgba(244, 240, 230, 0.035), transparent 24%);
+    linear-gradient(180deg, rgba(244, 240, 230, 0.035), transparent 24%),
+    #080a06;
 }
 
 .demo-section::before {
@@ -838,8 +840,8 @@ textarea:focus-visible {
 .linkedin-section {
   overflow: hidden;
   background:
-    linear-gradient(180deg, transparent 0%, rgba(8, 11, 7, 0.82) 18%, rgba(8, 11, 7, 0.82) 84%, transparent),
-    radial-gradient(circle at 84% 20%, rgba(24, 119, 242, 0.12), transparent 28%);
+    radial-gradient(circle at 84% 20%, rgba(24, 119, 242, 0.12), transparent 28%),
+    #080a06;
 }
 
 .linkedin-heading {
@@ -847,6 +849,12 @@ textarea:focus-visible {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 32px;
   align-items: end;
+}
+
+.linkedin-heading > *,
+.footer-statement > *,
+.footer-main > * {
+  min-width: 0;
 }
 
 .linkedin-follow,
@@ -999,9 +1007,9 @@ textarea:focus-visible {
 
 .final-section {
   background:
-    linear-gradient(180deg, transparent 0%, rgba(14, 15, 9, 0.62) 18%, rgba(14, 15, 9, 0.62) 100%),
     linear-gradient(135deg, rgba(204, 255, 0, 0.11), transparent 34%),
-    linear-gradient(250deg, rgba(24, 216, 245, 0.06), transparent 34%);
+    linear-gradient(250deg, rgba(24, 216, 245, 0.06), transparent 34%),
+    #080a06;
 }
 
 @keyframes ambient-sweep {
@@ -1128,6 +1136,11 @@ textarea:focus-visible {
   max-width: none;
   font-size: clamp(3rem, 7.2vw, 7.5rem);
   line-height: 0.82;
+}
+
+html[lang="uk"] .footer-statement h2 {
+  font-size: clamp(2.8rem, 6.35vw, 6.65rem);
+  line-height: 0.9;
 }
 
 .footer-main {
@@ -1421,6 +1434,21 @@ textarea::placeholder {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .linkedin-heading,
+  .footer-statement {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .linkedin-follow,
+  .footer-statement .primary-button {
+    justify-self: start;
+  }
+
+  .footer-statement > p {
+    grid-column: auto;
+  }
+
   .linkedin-grid > :last-child {
     grid-column: 1 / -1;
   }
@@ -1467,6 +1495,11 @@ textarea::placeholder {
   h1 {
     font-size: clamp(2.75rem, 13vw, 4.1rem);
     line-height: 0.92;
+  }
+
+  html[lang="uk"] h1 {
+    font-size: clamp(1.8rem, 9.2vw, 3.5rem);
+    line-height: 0.94;
   }
 
   h2 {
@@ -1638,6 +1671,11 @@ textarea::placeholder {
   .footer-statement h2 {
     font-size: clamp(3rem, 16vw, 5rem);
     line-height: 0.86;
+  }
+
+  html[lang="uk"] .footer-statement h2 {
+    font-size: clamp(2rem, 10vw, 4.35rem);
+    line-height: 0.94;
   }
 
   .footer-statement .primary-button {
