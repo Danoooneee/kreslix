@@ -857,7 +857,7 @@ textarea:focus-visible {
   z-index: 1;
   isolation: isolate;
   width: min(100% - 28px, 1360px);
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 20 / 13;
   height: auto;
   margin: 0 auto;
   overflow: hidden;
