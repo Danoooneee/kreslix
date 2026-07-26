@@ -67,6 +67,39 @@
         text-transform: uppercase;
       }
 
+      .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+
+      .language-toggle {
+        min-width: 52px;
+        min-height: 42px;
+        padding: 0 14px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(244, 240, 230, 0.04);
+        color: var(--ink);
+        cursor: pointer;
+        font: inherit;
+        font-size: 0.76rem;
+        font-weight: 700;
+        transition: border-color 180ms ease, background 180ms ease, color 180ms ease;
+      }
+
+      .language-toggle:hover,
+      .language-toggle:focus-visible {
+        border-color: rgba(204, 255, 0, 0.45);
+        background: rgba(204, 255, 0, 0.08);
+        color: var(--accent);
+        outline: none;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
       main {
         padding: clamp(64px, 10vw, 120px) 0;
       }
@@ -140,6 +173,20 @@
       }
 
       @media (max-width: 640px) {
+        header {
+          align-items: flex-start;
+        }
+
+        .header-actions {
+          flex-wrap: wrap;
+          justify-content: flex-end;
+        }
+
+        h1 {
+          font-size: clamp(2rem, 10vw, 4.5rem);
+          overflow-wrap: anywhere;
+        }
+
         section {
           grid-template-columns: 1fr;
           gap: 14px;
@@ -150,10 +197,13 @@
   <body>
     <header>
       <a class="brand" href="../">KRESLIX</a>
-      <a class="back" href="../">← Back to website</a>
+      <div class="header-actions">
+        <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch language">EN</button>
+        <a class="back" id="back-link" href="../">← Back to website</a>
+      </div>
     </header>
 
-    <main>
+    <main data-language="en">
       <p class="eyebrow">// Legal</p>
       <h1>Privacy Policy</h1>
       <p class="updated">Last updated: 24 July 2026</p>
@@ -259,9 +309,157 @@
       </div>
     </main>
 
-    <footer>
+    <main data-language="uk" hidden>
+      <p class="eyebrow">// Правова інформація</p>
+      <h1>Політика конфіденційності</h1>
+      <p class="updated">Останнє оновлення: 24 липня 2026 року</p>
+
+      <div class="policy">
+        <section>
+          <h2>01 / Сфера дії</h2>
+          <div>
+            <p>
+              Ця політика пояснює, як Kreslix обробляє персональну інформацію, надану через цей сайт,
+              зокрема заявки на демонстрацію та прямі ділові звернення.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2>02 / Які дані ми збираємо</h2>
+          <div>
+            <p>Коли ви замовляєте демонстрацію, ми можемо отримувати:</p>
+            <ul>
+              <li>ваше ім’я, назву компанії, посаду, електронну адресу, номер телефону або контакт у Telegram;</li>
+              <li>вашу країну або місто;</li>
+              <li>інформацію про ваші проєкти, інструменти, робочі процеси та потреби бізнесу;</li>
+              <li>базову технічну інформацію, необхідну для роботи й захисту сайту.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2>03 / Як ми використовуємо дані</h2>
+          <div>
+            <p>
+              Ми використовуємо цю інформацію, щоб відповідати на звернення, готувати релевантні демонстрації
+              або пропозиції пілотних проєктів, удосконалювати Kreslix, підтримувати безпеку сайту та виконувати
+              вимоги законодавства. Ми не продаємо персональну інформацію.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2>04 / Правові підстави</h2>
+          <div>
+            <p>
+              Залежно від вашого місцезнаходження обробка ґрунтується на вашому запиті щодо дій до укладення
+              договору, нашому законному інтересі в роботі й удосконаленні сервісу, вашій згоді або виконанні
+              юридичних зобов’язань.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2>05 / Постачальники послуг</h2>
+          <div>
+            <p>
+              Інформацію можуть обробляти постачальники, які забезпечують хостинг, комунікації, аналітику або
+              безпеку. Вони отримують лише дані, необхідні для надання відповідної послуги, і повинні захищати
+              їх. Сповіщення про заявки на демонстрацію можуть надсилатися через Telegram.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2>06 / Строк зберігання</h2>
+          <div>
+            <p>
+              Ми зберігаємо інформацію лише стільки, скільки потрібно для опрацювання звернення, підтримання
+              ділових відносин, вирішення спорів, захисту сервісу або виконання юридичних вимог.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2>07 / Ваші права</h2>
+          <div>
+            <p>
+              Відповідно до застосовного законодавства ви можете подати запит на доступ, виправлення, видалення,
+              обмеження обробки або перенесення персональної інформації, а також заперечити проти певних видів
+              обробки. Якщо правовою підставою є згода, ви також можете відкликати її.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2>08 / Локальне сховище</h2>
+          <div>
+            <p>
+              Цей сайт може зберігати вибрану мову у вашому браузері. LinkedIn та інші зовнішні сайти мають
+              власні політики конфіденційності й використання файлів cookie.
+            </p>
+          </div>
+        </section>
+
+        <section>
+          <h2>09 / Контакти</h2>
+          <div>
+            <p>
+              Щоб подати запит щодо конфіденційності, зв’яжіться з Kreslix за контактами з вашого поточного
+              листування або через
+              <a href="https://www.linkedin.com/company/kreslix">сторінку Kreslix у LinkedIn</a>.
+            </p>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer data-language="en">
       <span>© 2026 Kreslix</span>
       <span>AI platform for internal electrical network design</span>
     </footer>
+
+    <footer data-language="uk" hidden>
+      <span>© 2026 Kreslix</span>
+      <span>AI-платформа для проєктування внутрішніх електромереж</span>
+    </footer>
+
+    <script>
+      const languageToggle = document.querySelector("#language-toggle");
+      const backLink = document.querySelector("#back-link");
+      const description = document.querySelector('meta[name="description"]');
+      const languageBlocks = document.querySelectorAll("[data-language]");
+
+      function applyLanguage(language) {
+        const nextLanguage = language === "uk" ? "uk" : "en";
+        document.documentElement.lang = nextLanguage;
+        localStorage.setItem("kreslix-language", nextLanguage);
+
+        languageBlocks.forEach((block) => {
+          block.hidden = block.dataset.language !== nextLanguage;
+        });
+
+        if (nextLanguage === "uk") {
+          document.title = "Політика конфіденційності | Kreslix";
+          description.setAttribute("content", "Політика конфіденційності Kreslix.");
+          languageToggle.textContent = "UA";
+          languageToggle.setAttribute("aria-label", "Перемкнути мову");
+          backLink.textContent = "← Повернутися на сайт";
+        } else {
+          document.title = "Privacy Policy | Kreslix";
+          description.setAttribute("content", "Kreslix privacy policy.");
+          languageToggle.textContent = "EN";
+          languageToggle.setAttribute("aria-label", "Switch language");
+          backLink.textContent = "← Back to website";
+        }
+      }
+
+      languageToggle.addEventListener("click", () => {
+        applyLanguage(document.documentElement.lang === "uk" ? "en" : "uk");
+      });
+
+      applyLanguage(localStorage.getItem("kreslix-language"));
+    </script>
   </body>
 </html>

@@ -11,6 +11,7 @@ import {
   Loader2,
   Menu,
   Network,
+  Pause,
   Play,
   Send,
   ShieldCheck,
@@ -35,6 +36,11 @@ const languages = {
 
 const content = {
   en: {
+    meta: {
+      title: "Kreslix | AI platform for internal electrical network design",
+      description:
+        "Kreslix helps engineering teams automate internal electrical network design. Book a demo to test the workflow with your team."
+    },
     accessibility: {
       home: "Kreslix home",
       navigation: "Main navigation",
@@ -135,7 +141,9 @@ const content = {
         "The demo shows the product workflow in context: project input, routing generation, engineer review, and the path toward a practical pilot.",
       videoLabel: "Kreslix product demo",
       meta: "Full-screen product walkthrough",
-      detail: "See Kreslix in action / pilot workflow preview"
+      detail: "See Kreslix in action / pilot workflow preview",
+      playVideo: "Play demo",
+      pauseVideo: "Pause demo"
     },
     linkedin: {
       eyebrow: "Latest from LinkedIn",
@@ -188,11 +196,16 @@ const content = {
       submit: "Request demo",
       sending: "Sending",
       success: "Thanks. We received your request and will get back with a demo proposal.",
-      error: "The request could not be sent yet. Please check Telegram configuration or try again later.",
+      error: "The request could not be sent. Please try again later or contact us through LinkedIn.",
       required: "Please fill in the required fields."
     }
   },
   uk: {
+    meta: {
+      title: "Kreslix | AI-платформа для проєктування внутрішніх електромереж",
+      description:
+        "Kreslix допомагає інжиніринговим командам автоматизувати проєктування внутрішніх електромереж. Замовте демо для перевірки на реальному процесі."
+    },
     accessibility: {
       home: "На головну Kreslix",
       navigation: "Головна навігація",
@@ -293,7 +306,9 @@ const content = {
         "Демо показує весь процес у контексті: вхідні дані проєкту, побудову трасування, інженерну перевірку та перехід до практичного пілоту.",
       videoLabel: "Демонстрація продукту Kreslix",
       meta: "Повноекранна демонстрація продукту",
-      detail: "Kreslix у дії — огляд пілотного процесу"
+      detail: "Kreslix у дії — огляд пілотного процесу",
+      playVideo: "Запустити демо",
+      pauseVideo: "Призупинити демо"
     },
     linkedin: {
       eyebrow: "Останнє з LinkedIn",
@@ -365,7 +380,13 @@ function App() {
   useEffect(() => {
     localStorage.setItem("kreslix-language", language);
     document.documentElement.lang = language === "uk" ? "uk" : "en";
-  }, [language]);
+    document.title = t.meta.title;
+
+    const description = document.querySelector('meta[name="description"]');
+    if (description) {
+      description.setAttribute("content", t.meta.description);
+    }
+  }, [language, t.meta.description, t.meta.title]);
 
   useEffect(() => {
     document.body.style.overflow = demoOpen ? "hidden" : "";
@@ -643,6 +664,7 @@ function BenefitsSection({ t }) {
 function DemoSection({ t, openDemo }) {
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -654,20 +676,36 @@ function DemoSection({ t, openDemo }) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          video.muted = true;
-          video.play().catch(() => {});
-        } else {
+        if (!entry.isIntersecting) {
           video.pause();
+          setIsPlaying(false);
         }
       },
-      { threshold: 0.42 }
+      { threshold: 0.18 }
     );
 
     observer.observe(section);
 
     return () => observer.disconnect();
   }, []);
+
+  const toggleVideo = async () => {
+    const video = videoRef.current;
+
+    if (!video) return;
+
+    if (video.paused) {
+      try {
+        await video.play();
+        setIsPlaying(true);
+      } catch {
+        setIsPlaying(false);
+      }
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
 
   return (
     <section id="demo" className="demo-section" ref={sectionRef}>
@@ -694,9 +732,31 @@ function DemoSection({ t, openDemo }) {
         </Reveal>
       </div>
       <Reveal delay={0.1} className="demo-stage">
-        <video ref={videoRef} className="demo-stage-video" muted loop playsInline preload="metadata" aria-label={t.demo.videoLabel}>
+        <video
+          ref={videoRef}
+          className="demo-stage-video"
+          loop
+          playsInline
+          preload="metadata"
+          poster={publicAsset("media/kreslix-demo-poster.jpg")}
+          aria-label={t.demo.videoLabel}
+          onPlay={() => setIsPlaying(true)}
+          onPause={() => setIsPlaying(false)}
+        >
           <source src={publicAsset("media/kreslix-demo-web.mp4")} type="video/mp4" />
         </video>
+        <button
+          className={`demo-play-toggle${isPlaying ? " is-playing" : ""}`}
+          type="button"
+          onClick={toggleVideo}
+          aria-label={isPlaying ? t.demo.pauseVideo : t.demo.playVideo}
+          aria-pressed={isPlaying}
+        >
+          <span className="demo-play-icon" aria-hidden="true">
+            {isPlaying ? <Pause size={22} fill="currentColor" /> : <Play size={28} fill="currentColor" />}
+          </span>
+          <span>{isPlaying ? t.demo.pauseVideo : t.demo.playVideo}</span>
+        </button>
       </Reveal>
     </section>
   );
