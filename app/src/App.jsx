@@ -525,7 +525,7 @@ function Hero({ t, openDemo, reducedMotion }) {
   return (
     <section id="top" className="hero-section">
       <HeroBackground reducedMotion={reducedMotion} />
-      <Reveal className="hero-copy">
+      <Reveal className="hero-copy" disabled>
         <p className="eyebrow">{t.hero.eyebrow}</p>
         <h1>{t.hero.title}</h1>
         <p className="hero-lead">{t.hero.lead}</p>
@@ -738,12 +738,12 @@ function DemoSection({ t, openDemo }) {
           loop
           playsInline
           preload="metadata"
-          poster={publicAsset("media/kreslix-demo-poster.jpg")}
+          poster={publicAsset("media/kreslix-demo-poster-v2.jpg")}
           aria-label={t.demo.videoLabel}
           onPlay={() => setIsPlaying(true)}
           onPause={() => setIsPlaying(false)}
         >
-          <source src={publicAsset("media/kreslix-demo-web.mp4")} type="video/mp4" />
+          <source src={publicAsset("media/kreslix-demo-hq-v2.mp4")} type="video/mp4" />
         </video>
         <button
           className={`demo-play-toggle${isPlaying ? " is-playing" : ""}`}
@@ -1153,8 +1153,28 @@ function TextArea({ label, name, value, onChange, placeholder = "", required = f
   );
 }
 
-function Reveal({ children, className = "" }) {
-  return <div className={className}>{children}</div>;
+function Reveal({ children, className = "", delay = 0, disabled = false }) {
+  const reducedMotion = useReducedMotion();
+
+  if (disabled || reducedMotion) {
+    return <div className={className}>{children}</div>;
+  }
+
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.14 }}
+      transition={{
+        duration: 0.56,
+        delay,
+        ease: [0.16, 1, 0.3, 1]
+      }}
+    >
+      {children}
+    </motion.div>
+  );
 }
 
 function HeroBackground({ reducedMotion }) {
