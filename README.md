@@ -54,9 +54,18 @@ Presentation buttons open the shared Google Drive presentation in a new browser 
 https://drive.google.com/file/d/1qgRQitgBYbfbETDYNzBT8k0ASHTSZtRJ/view?usp=sharing
 ```
 
-## LinkedIn
+## LinkedIn updates
 
-The landing page links directly to the kreslix company page on LinkedIn.
+The landing page reads the three latest posts from `public/data/linkedin-posts.json`. GitHub Actions refreshes this file every six hours, while an open site tab checks for a newer feed every 15 minutes.
+
+Configure these repository Actions secrets:
+
+```bash
+LINKEDIN_ACCESS_TOKEN=...
+LINKEDIN_ORGANIZATION_ID=... # optional when the organization can be resolved from the vanity name
+```
+
+The token needs LinkedIn's `r_organization_social` permission and stays inside GitHub Actions. It is never included in the browser bundle. The workflow can also be started manually from **Actions → Sync LinkedIn posts → Run workflow**.
 
 ## Typography
 

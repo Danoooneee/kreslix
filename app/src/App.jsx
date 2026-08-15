@@ -23,6 +23,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 const publicAsset = (path) => `${import.meta.env.VITE_STATIC_BASE || import.meta.env.BASE_URL}${path}`;
 const presentationUrl = "https://drive.google.com/file/d/1qgRQitgBYbfbETDYNzBT8k0ASHTSZtRJ/view?usp=sharing";
 const linkedInUrl = "https://www.linkedin.com/company/kreslix";
+const linkedInFeedEndpoint = publicAsset("data/linkedin-posts.json");
 const languages = {
   en: "EN",
   uk: "UA"
@@ -102,7 +103,10 @@ const content = {
     linkedin: {
       eyebrow: "LinkedIn",
       title: "Follow kreslix for product updates and pilot results.",
-      follow: "Follow kreslix"
+      follow: "Follow kreslix",
+      readPost: "Read post",
+      loading: "Loading latest posts…",
+      fallback: "The latest posts are temporarily unavailable. Follow us directly on LinkedIn."
     },
     final: {
       eyebrow: "Let’s talk",
@@ -204,7 +208,10 @@ const content = {
     linkedin: {
       eyebrow: "LinkedIn",
       title: "Стежте за kreslix — публікуємо оновлення продукту та результати пілотів.",
-      follow: "Стежити за kreslix"
+      follow: "Стежити за kreslix",
+      readPost: "Читати допис",
+      loading: "Завантажуємо останні дописи…",
+      fallback: "Останні дописи тимчасово недоступні. Стежте за нами безпосередньо в LinkedIn."
     },
     final: {
       eyebrow: "Поговорімо",
@@ -283,7 +290,7 @@ function App() {
         <ProblemSection t={t} />
         <BenefitsSection t={t} />
         <DemoSection t={t} openDemo={() => setDemoOpen(true)} />
-        <LinkedInSection t={t} />
+        <LinkedInSection t={t} language={language} />
         <FinalCTA t={t} openDemo={() => setDemoOpen(true)} />
       </main>
       <Footer nav={nav} t={t} openDemo={() => setDemoOpen(true)} />
@@ -620,16 +627,113 @@ function DemoSection({ t, openDemo }) {
   );
 }
 
-function LinkedInSection({ t }) {
+function LinkedInSection({ t, language }) {
+  const [posts, setPosts] = useState([]);
+  const [status, setStatus] = useState("loading");
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    const loadPosts = async () => {
+      try {
+        const cacheWindow = Math.floor(Date.now() / (15 * 60 * 1000));
+        const response = await fetch(`${linkedInFeedEndpoint}?v=${cacheWindow}`, {
+          cache: "no-store",
+          headers: { Accept: "application/json" },
+          signal: controller.signal
+        });
+
+        if (!response.ok) {
+          throw new Error("LinkedIn feed is unavailable");
+        }
+
+        const data = await response.json();
+        const nextPosts = Array.isArray(data.posts) ? data.posts.slice(0, 3) : [];
+        setPosts(nextPosts);
+        setStatus(nextPosts.length ? "ready" : "empty");
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          setStatus("error");
+        }
+      }
+    };
+
+    loadPosts();
+    const refreshTimer = window.setInterval(loadPosts, 15 * 60 * 1000);
+
+    return () => {
+      controller.abort();
+      window.clearInterval(refreshTimer);
+    };
+  }, []);
+
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+
+    if (Number.isNaN(date.getTime())) return "";
+
+    return new Intl.DateTimeFormat(language === "uk" ? "uk-UA" : "en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric"
+    }).format(date);
+  };
+
   return (
     <section id="linkedin" className="section linkedin-section">
-      <div className="section-inner linkedin-compact">
-        <SectionHeader eyebrow={t.linkedin.eyebrow} title={t.linkedin.title} />
-        <a className="linkedin-follow" href={linkedInUrl} target="_blank" rel="noreferrer">
-          <Linkedin size={18} aria-hidden="true" />
-          {t.linkedin.follow}
-          <ArrowUpRight size={17} aria-hidden="true" />
-        </a>
+      <div className="section-inner">
+        <div className="linkedin-heading">
+          <SectionHeader eyebrow={t.linkedin.eyebrow} title={t.linkedin.title} />
+          <a className="linkedin-follow" href={linkedInUrl} target="_blank" rel="noreferrer">
+            <Linkedin size={18} aria-hidden="true" />
+            {t.linkedin.follow}
+            <ArrowUpRight size={17} aria-hidden="true" />
+          </a>
+        </div>
+
+        {status === "loading" && (
+          <div className="linkedin-loading" role="status">
+            <Loader2 className="spin" size={18} aria-hidden="true" />
+            {t.linkedin.loading}
+          </div>
+        )}
+
+        {status === "ready" && (
+          <div className="linkedin-grid">
+            {posts.map((post, index) => {
+              const dateLabel = formatDate(post.publishedAt);
+
+              return (
+                <Reveal className="linkedin-card-wrap" delay={index * 0.05} key={post.id}>
+                  <article className="linkedin-card">
+                    <div className="linkedin-card-top">
+                      <span className="linkedin-mark">
+                        <Linkedin size={18} aria-hidden="true" />
+                      </span>
+                      {dateLabel && <time dateTime={new Date(post.publishedAt).toISOString()}>{dateLabel}</time>}
+                    </div>
+                    <p>{post.text}</p>
+                    <a href={post.url} target="_blank" rel="noreferrer">
+                      {t.linkedin.readPost}
+                      <ArrowUpRight size={17} aria-hidden="true" />
+                    </a>
+                  </article>
+                </Reveal>
+              );
+            })}
+          </div>
+        )}
+
+        {(status === "error" || status === "empty") && (
+          <div className="linkedin-fallback">
+            <Linkedin size={24} aria-hidden="true" />
+            <p>{t.linkedin.fallback}</p>
+            <a href={linkedInUrl} target="_blank" rel="noreferrer">
+              {t.linkedin.follow}
+              <ArrowUpRight size={17} aria-hidden="true" />
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );
