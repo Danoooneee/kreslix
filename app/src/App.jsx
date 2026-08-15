@@ -23,12 +23,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 const publicAsset = (path) => `${import.meta.env.VITE_STATIC_BASE || import.meta.env.BASE_URL}${path}`;
 const presentationUrl = "https://drive.google.com/file/d/1qgRQitgBYbfbETDYNzBT8k0ASHTSZtRJ/view?usp=sharing";
 const linkedInUrl = "https://www.linkedin.com/company/kreslix";
-const linkedInFeedEndpoint =
-  import.meta.env.VITE_LINKEDIN_FEED_ENDPOINT ||
-  (import.meta.env.PROD && import.meta.env.BASE_URL !== "/"
-    ? publicAsset("data/linkedin-posts.json")
-    : "/api/linkedin-posts");
-
 const languages = {
   en: "EN",
   uk: "UA"
@@ -37,133 +31,86 @@ const languages = {
 const content = {
   en: {
     meta: {
-      title: "Kreslix | AI platform for internal electrical network design",
+      title: "kreslix | AI platform for internal electrical network design",
       description:
-        "Kreslix helps engineering teams automate internal electrical network design. Book a demo to test the workflow with your team."
+        "kreslix helps design firms automate electrical documentation, drawings, schematics, and load calculations."
     },
     accessibility: {
-      home: "Kreslix home",
+      home: "kreslix home",
       navigation: "Main navigation",
       mobileNavigation: "Mobile navigation",
       openMenu: "Open menu",
-      closeMenu: "Close menu"
+      closeMenu: "Close menu",
+      language: "Choose language"
     },
     nav: [
-      { label: "Product", href: "#product" },
-      { label: "For whom", href: "#audience" },
-      { label: "Problem", href: "#problem" },
-      { label: "Benefits", href: "#benefits" },
+      { label: "Who it’s for", href: "#audience" },
+      { label: "Why now", href: "#problem" },
+      { label: "Results", href: "#benefits" },
       { label: "Demo", href: "#demo" }
     ],
-    cta: "Book a demo",
+    cta: "Book a call",
     demoVideo: "Demo video",
     close: "Close",
-    presentation: {
-      label: "View presentation",
-      href: presentationUrl
-    },
+    presentation: { label: "View presentation", href: presentationUrl },
     hero: {
       eyebrow: "AI platform for internal electrical network design",
       title: "Design internal electrical networks faster.",
       lead:
-        "Kreslix helps engineering teams automate internal electrical network design, reduce repetitive routing work, and keep project decisions under engineer control.",
-      proof: "Built for real electrical design workflows, pilot testing, and long-term client cooperation."
-    },
-    product: {
-      eyebrow: "Short product description",
-      title: "Kreslix is an AI platform for internal electrical network design.",
-      text:
-        "It is designed to support engineering companies in the most repetitive parts of electrical network design: reading project context, generating routing logic, reviewing outputs, and preparing a workflow that can be repeated across future projects.",
-      cards: [
-        "AI-assisted routing for internal electrical networks",
-        "Engineer-controlled review before project decisions move forward",
-        "Workflow built around real pilot projects, not abstract demos"
-      ]
+        "kreslix helps design firms automate documentation, plans and schematics, and load calculations—while engineers stay in control of key decisions."
     },
     audience: {
-      eyebrow: "For whom",
-      title: "For engineering teams that need more project capacity.",
-      lead:
-        "Kreslix is built for companies that already deliver electrical design projects and want to scale output without losing control over quality.",
+      eyebrow: "Who it’s for",
+      title: "For design firms ready to grow without scaling costs at the same pace.",
       items: [
-        {
-          title: "Engineering company directors",
-          text: "Need to increase delivery capacity, take on more projects, and understand whether AI can create measurable business value."
-        },
-        {
-          title: "Project leads",
-          text: "Need predictable workflows, fewer repeated corrections, and clearer visibility into where design time is lost."
-        },
-        {
-          title: "Electrical design engineers",
-          text: "Need to reduce repetitive routing work while keeping professional control over the final project decisions."
-        }
+        { title: "Design firm directors", text: "Grow project capacity without expanding the team at the same rate." },
+        { title: "Chief engineers and project leads", text: "Keep deadlines, quality, and delivery under control." },
+        { title: "Electrical design engineers", text: "Hand routine work to the system and focus on engineering decisions." }
       ]
     },
     problem: {
-      eyebrow: "Problem",
-      title: "Manual routing limits how many projects a team can deliver.",
+      eyebrow: "What slows projects down",
+      title: "Routine work takes time away from engineering decisions.",
       text:
-        "Internal electrical network design still depends on repetitive CAD/BIM actions, manual routing, repeated checking, and project logic that often stays inside one engineer's head. This makes it hard to scale project volume without increasing team size or risking quality.",
+        "Drawings, checks, calculations, and documentation are still handled manually and across inconsistent formats. Teams move slower, while consultants and installers spend extra time interpreting the project.",
       points: [
-        "Too many repeated routing and redrawing actions",
-        "Hard to scale delivery without adding more engineers",
-        "Quality control depends on manual review at every stage",
-        "Project knowledge is difficult to reuse across similar buildings"
+        "Plans and schematics are drawn manually",
+        "Checks and corrections are repeated across every project",
+        "Load calculations live in disconnected files",
+        "Inconsistent documentation is harder for consultants and installers to read"
       ]
     },
     benefits: {
-      eyebrow: "Key benefits",
-      title: "A faster workflow with engineer control built in.",
+      eyebrow: "Measurable impact",
+      title: "Results that show up in project economics.",
       items: [
-        {
-          title: "Reduce repetitive work",
-          text: "Move routine routing actions from manual drafting into an AI-assisted workflow."
-        },
-        {
-          title: "Keep engineers in control",
-          text: "Engineers review, correct, and approve critical outputs before decisions move forward."
-        },
-        {
-          title: "Validate through a pilot",
-          text: "Start with one real workflow and measure whether automation makes business sense."
-        },
-        {
-          title: "Build repeatable delivery",
-          text: "Turn project logic, corrections, and QA/QC signals into a process that can improve over time."
-        }
+        { metric: "x2", title: "More projects per month", text: "Increase delivery capacity with the same core team." },
+        { metric: "3×", title: "Projected client ROI", text: "Automation pays back through time saved and added capacity." },
+        { metric: "+$1,500", title: "Potential monthly profit", text: "Unit-economics estimate from additional project capacity." },
+        { metric: "100%", title: "Automated validation", text: "Check outputs against configured requirements and standards." }
       ]
     },
     demo: {
-      eyebrow: "Product demonstration",
-      title: "See how Kreslix supports electrical network design.",
-      text:
-        "The demo shows the product workflow in context: project input, routing generation, engineer review, and the path toward a practical pilot.",
-      videoLabel: "Kreslix product demo",
+      eyebrow: "Product demo",
+      title: "See kreslix at work.",
+      text: "From project input to generated drawings and engineer review.",
+      videoLabel: "kreslix product demo",
       meta: "Full-screen product walkthrough",
-      detail: "See Kreslix in action / pilot workflow preview",
       playVideo: "Play demo",
       pauseVideo: "Pause demo"
     },
     linkedin: {
-      eyebrow: "Latest from LinkedIn",
-      title: "Product thinking, pilot insights, and Kreslix updates.",
-      text: "Follow how we are building a more efficient workflow for electrical design teams.",
-      readPost: "Read on LinkedIn",
-      follow: "Follow Kreslix",
-      loading: "Loading the latest posts…",
-      fallback: "The live feed is temporarily unavailable. Visit our LinkedIn page for the latest updates."
+      eyebrow: "LinkedIn",
+      title: "Follow kreslix for product updates and pilot results.",
+      follow: "Follow kreslix"
     },
     final: {
-      eyebrow: "Call to action",
-      title: "Book a demo and check if Kreslix fits your workflow.",
-      text:
-        "Tell us how your team designs internal electrical networks today. We will review your workflow and suggest a practical pilot path."
+      eyebrow: "Let’s talk",
+      title: "Find out what your team can automate first.",
+      text: "Leave your contact and we’ll arrange a short call."
     },
     footer: {
-      label: "Kreslix / electrical design intelligence",
-      title: "Build more. Route less.",
-      description: "AI-assisted workflows for internal electrical network design.",
+      description: "AI automation for internal electrical network design.",
       explore: "Explore",
       connect: "Connect",
       linkedin: "LinkedIn",
@@ -172,163 +119,100 @@ const content = {
       rights: "All rights reserved."
     },
     form: {
-      eyebrow: "Kreslix demo",
-      title: "Book a demo",
-      intro: "Share a few details about your current design workflow. We will review it before contacting you.",
-      fields: {
-        name: "Name",
-        company: "Company",
-        role: "Role",
-        email: "Email",
-        contact: "Telegram / phone",
-        location: "Country / city",
-        projects: "Projects per month",
-        tools: "Current tools",
-        bottleneck: "Main bottleneck",
-        pilot: "What would make a pilot useful?"
-      },
-      placeholders: {
-        projects: "Example: 2-3 residential projects",
-        tools: "AutoCAD, Revit, BIM workflow...",
-        bottleneck: "Manual routing, QA/QC, redrawing, documentation...",
-        pilot: "What result would make the pilot worth your team's time?"
-      },
-      submit: "Request demo",
+      eyebrow: "kreslix",
+      title: "Book a call",
+      intro: "Leave the essentials—we’ll discuss everything else directly.",
+      fields: { name: "Name", company: "Company", contact: "Email or phone" },
+      placeholders: { contact: "name@company.com or +1 555 000 0000" },
+      submit: "Book a call",
       sending: "Sending",
-      success: "Thanks. We received your request and will get back with a demo proposal.",
+      success: "Thanks. We received your contact and will get back to you shortly.",
       error: "The request could not be sent. Please try again later or contact us through LinkedIn.",
-      required: "Please fill in the required fields."
+      required: "Please fill in all three fields."
     }
   },
   uk: {
     meta: {
-      title: "Kreslix | AI-платформа для проєктування внутрішніх електромереж",
+      title: "kreslix | AI-платформа для проєктування внутрішніх електромереж",
       description:
-        "Kreslix допомагає інжиніринговим командам автоматизувати проєктування внутрішніх електромереж. Замовте демо для перевірки на реальному процесі."
+        "kreslix допомагає проєктним компаніям автоматизувати документацію, креслення планів і схем та розрахунок навантажень."
     },
     accessibility: {
-      home: "На головну Kreslix",
+      home: "На головну kreslix",
       navigation: "Головна навігація",
       mobileNavigation: "Мобільна навігація",
       openMenu: "Відкрити меню",
-      closeMenu: "Закрити меню"
+      closeMenu: "Закрити меню",
+      language: "Вибрати мову"
     },
     nav: [
-      { label: "Продукт", href: "#product" },
       { label: "Для кого", href: "#audience" },
-      { label: "Проблема", href: "#problem" },
-      { label: "Переваги", href: "#benefits" },
+      { label: "Чому зараз", href: "#problem" },
+      { label: "Результати", href: "#benefits" },
       { label: "Демо", href: "#demo" }
     ],
-    cta: "Замовити демо",
+    cta: "Запланувати дзвінок",
     demoVideo: "Переглянути демо",
     close: "Закрити",
-    presentation: {
-      label: "Відкрити презентацію",
-      href: presentationUrl
-    },
+    presentation: { label: "Відкрити презентацію", href: presentationUrl },
     hero: {
       eyebrow: "AI-платформа для проєктування внутрішніх електромереж",
       title: "Проєктуйте внутрішні електромережі швидше.",
       lead:
-        "Kreslix допомагає інжиніринговим командам автоматизувати проєктування внутрішніх електромереж, зменшити повторюване трасування й залишити ключові рішення під контролем інженера.",
-      proof: "Створено для реальних процесів електропроєктування, пілотного тестування та довгострокової співпраці."
-    },
-    product: {
-      eyebrow: "Короткий опис продукту",
-      title: "Kreslix — AI-платформа для проєктування внутрішніх електромереж.",
-      text:
-        "Платформа допомагає інжиніринговим компаніям автоматизувати найбільш повторювані етапи електропроєктування: аналіз проєктного контексту, побудову логіки трасування, перевірку результатів і підготовку процесу, який можна повторювати в наступних проєктах.",
-      cards: [
-        "Трасування внутрішніх електромереж за допомогою AI",
-        "Інженерна перевірка перед ухваленням критичних рішень",
-        "Робочий процес на основі реального пілотного проєкту, а не абстрактної демонстрації"
-      ]
+        "kreslix допомагає проєктним компаніям автоматизувати оформлення документації, креслення планів і схем та розрахунок навантажень — із контролем інженера на ключових етапах."
     },
     audience: {
-      eyebrow: "Для кого рішення",
-      title: "Для інжинірингових команд, яким потрібно виконувати більше проєктів.",
-      lead:
-        "Kreslix створено для компаній, які вже проєктують електромережі й хочуть збільшити обсяг робіт без втрати контролю над якістю.",
+      eyebrow: "Для кого",
+      title: "Для проєктних компаній, які хочуть зростати без пропорційного збільшення витрат.",
       items: [
-        {
-          title: "Директори інжинірингових компаній",
-          text: "Прагнуть збільшити продуктивність команди, брати більше проєктів і зрозуміти, чи може AI створити вимірювану цінність для бізнесу."
-        },
-        {
-          title: "Керівники проєктів",
-          text: "Потребують передбачуваних процесів, меншої кількості повторних правок і чіткого розуміння, де команда втрачає час."
-        },
-        {
-          title: "Інженери-електрики",
-          text: "Потрібно зменшити повторюване трасування, але залишити професійний контроль над фінальними рішеннями."
-        }
+        { title: "Директори проєктних компаній", text: "Збільшуйте проєктну спроможність без такого самого зростання команди." },
+        { title: "ГІПи та керівники проєктів", text: "Тримайте строки, якість і виконання проєктів під контролем." },
+        { title: "Інженери-проєктувальники", text: "Передавайте рутину системі та зосереджуйтеся на інженерних рішеннях." }
       ]
     },
     problem: {
-      eyebrow: "Яку проблему вирішує",
-      title: "Ручне трасування обмежує кількість проєктів, які може виконати команда.",
+      eyebrow: "Що гальмує роботу",
+      title: "Рутина забирає час, який має працювати на інженерні рішення.",
       text:
-        "Проєктування внутрішніх електромереж досі тримається на повторюваних CAD/BIM діях, ручному трасуванні, перевірках і проєктній логіці, яка часто живе в голові окремого інженера. Через це складно масштабувати обсяг проєктів без розширення команди або ризику для якості.",
+        "Креслення, перевірки, розрахунки й оформлення документації досі виконуються вручну та в різних форматах. Це сповільнює команду й ускладнює передачу проєкту суміжникам і монтажникам.",
       points: [
-        "Забагато повторюваного трасування й перекреслення",
-        "Складно збільшувати обсяг робіт без найму нових інженерів",
-        "Контроль якості залежить від ручної перевірки на кожному етапі",
-        "Проєктні знання важко повторно використати в схожих будівлях"
+        "Плани та схеми креслять вручну",
+        "Перевірки й виправлення повторюються в кожному проєкті",
+        "Розрахунки навантажень зберігаються в розрізнених файлах",
+        "Неуніфікована документація ускладнює роботу суміжників і монтажників"
       ]
     },
     benefits: {
-      eyebrow: "Ключові переваги",
-      title: "Швидший процес із вбудованим інженерним контролем.",
+      eyebrow: "Вимірюваний результат",
+      title: "Результат, який видно в економіці проєкту.",
       items: [
-        {
-          title: "Менше повторюваної роботи",
-          text: "Перенесіть рутинне трасування з ручного креслення в процес із підтримкою AI."
-        },
-        {
-          title: "Інженер зберігає контроль",
-          text: "Команда перевіряє, коригує й погоджує критичні результати перед рухом далі."
-        },
-        {
-          title: "Перевірка на пілотному проєкті",
-          text: "Почніть з одного реального процесу й виміряйте, чи дає автоматизація практичну цінність для бізнесу."
-        },
-        {
-          title: "Відтворюваний процес",
-          text: "Перетворюйте проєктну логіку, правки та результати перевірок на процес, який удосконалюється з часом."
-        }
+        { metric: "x2", title: "Більше проєктів на місяць", text: "Збільшуйте обсяг робіт із тією самою основною командою." },
+        { metric: "3×", title: "Прогнозований ROI клієнта", text: "Автоматизація окупається завдяки зекономленому часу й додатковій спроможності." },
+        { metric: "+$1,500", title: "Потенційний прибуток на місяць", text: "Оцінка unit economics від додаткової проєктної спроможності." },
+        { metric: "100%", title: "Автоматизована валідація", text: "Перевіряйте результати за заданими вимогами та нормами." }
       ]
     },
     demo: {
-      eyebrow: "Демонстрація продукту",
-      title: "Подивіться, як Kreslix підтримує проєктування електромереж.",
-      text:
-        "Демо показує весь процес у контексті: вхідні дані проєкту, побудову трасування, інженерну перевірку та перехід до практичного пілоту.",
-      videoLabel: "Демонстрація продукту Kreslix",
+      eyebrow: "Демо продукту",
+      title: "Подивіться, як працює kreslix.",
+      text: "Від вхідних даних до згенерованих креслень та інженерної перевірки.",
+      videoLabel: "Демонстрація продукту kreslix",
       meta: "Повноекранна демонстрація продукту",
-      detail: "Kreslix у дії — огляд пілотного процесу",
       playVideo: "Запустити демо",
       pauseVideo: "Призупинити демо"
     },
     linkedin: {
-      eyebrow: "Останнє з LinkedIn",
-      title: "Продуктові рішення, інсайти з пілотів та новини Kreslix.",
-      text: "Стежте за тим, як ми створюємо ефективніші процеси для команд електропроєктування.",
-      readPost: "Читати в LinkedIn",
-      follow: "Стежити за Kreslix",
-      loading: "Завантажуємо останні пости…",
-      fallback: "Стрічка тимчасово недоступна. Перейдіть на нашу сторінку в LinkedIn, щоб переглянути останні новини."
+      eyebrow: "LinkedIn",
+      title: "Стежте за kreslix — публікуємо оновлення продукту та результати пілотів.",
+      follow: "Стежити за kreslix"
     },
     final: {
-      eyebrow: "Заклик до дії",
-      title: "Замовте демо та перевірте, чи підходить Kreslix вашим робочим процесам.",
-      text:
-        "Розкажіть, як ваша команда зараз проєктує внутрішні електромережі. Ми проаналізуємо ваш процес і запропонуємо практичний шлях до пілотного проєкту."
+      eyebrow: "Поговорімо",
+      title: "Визначимо, що ваша команда може автоматизувати насамперед.",
+      text: "Залиште контакт — домовимося про короткий дзвінок."
     },
     footer: {
-      label: "Kreslix / інтелектуальне електропроєктування",
-      title: "Проєктуйте більше. Трасуйте менше.",
-      description: "Проєктування внутрішніх електромереж із підтримкою AI.",
+      description: "AI-автоматизація проєктування внутрішніх електромереж.",
       explore: "Навігація",
       connect: "Зв’язок",
       linkedin: "LinkedIn",
@@ -337,32 +221,16 @@ const content = {
       rights: "Усі права захищені."
     },
     form: {
-      eyebrow: "Демо Kreslix",
-      title: "Замовити демо",
-      intro: "Розкажіть кілька деталей про ваш поточний робочий процес. Ми ознайомимося з ними перед тим, як зв’язатися з вами.",
-      fields: {
-        name: "Ім’я",
-        company: "Компанія",
-        role: "Роль",
-        email: "Email",
-        contact: "Telegram / телефон",
-        location: "Країна / місто",
-        projects: "Проєктів на місяць",
-        tools: "Поточні інструменти",
-        bottleneck: "Головне вузьке місце",
-        pilot: "Що зробить пілот корисним?"
-      },
-      placeholders: {
-        projects: "Наприклад: 2-3 житлові проєкти",
-        tools: "AutoCAD, Revit, BIM-процеси...",
-        bottleneck: "Ручне трасування, QA/QC, перекреслення, документація...",
-        pilot: "Який результат зробить пілот вартим часу команди?"
-      },
-      submit: "Надіслати запит",
+      eyebrow: "kreslix",
+      title: "Запланувати дзвінок",
+      intro: "Залиште головне — решту обговоримо безпосередньо.",
+      fields: { name: "Ім’я", company: "Компанія", contact: "Email або телефон" },
+      placeholders: { contact: "name@company.com або +380 00 000 00 00" },
+      submit: "Запланувати дзвінок",
       sending: "Надсилаємо",
-      success: "Дякуємо. Ми отримали заявку й незабаром зв’яжемося з вами щодо демонстрації.",
+      success: "Дякуємо. Ми отримали ваш контакт і незабаром зв’яжемося.",
       error: "Не вдалося надіслати заявку. Спробуйте ще раз пізніше або зв’яжіться з нами через LinkedIn.",
-      required: "Заповніть усі обов’язкові поля."
+      required: "Заповніть усі три поля."
     }
   }
 };
@@ -411,12 +279,11 @@ function App() {
       />
       <main>
         <Hero t={t} openDemo={() => setDemoOpen(true)} reducedMotion={reducedMotion} />
-        <ProductIntro t={t} />
         <AudienceSection t={t} />
         <ProblemSection t={t} />
         <BenefitsSection t={t} />
         <DemoSection t={t} openDemo={() => setDemoOpen(true)} />
-        <LinkedInSection t={t} language={language} />
+        <LinkedInSection t={t} />
         <FinalCTA t={t} openDemo={() => setDemoOpen(true)} />
       </main>
       <Footer nav={nav} t={t} openDemo={() => setDemoOpen(true)} />
@@ -466,7 +333,7 @@ function Header({ nav, language, setLanguage, menuOpen, setMenuOpen, openDemo, t
   return (
     <header className={`site-header${scrolled ? " is-scrolled" : ""}`}>
       <a className="brand" href="#top" aria-label={t.accessibility.home}>
-        <img src={publicAsset("brand/logo.svg")} alt="Kreslix" />
+        <img src={publicAsset("brand/logo.svg")} alt="kreslix" />
       </a>
 
       <nav className="desktop-nav" aria-label={t.accessibility.navigation}>
@@ -478,9 +345,20 @@ function Header({ nav, language, setLanguage, menuOpen, setMenuOpen, openDemo, t
       </nav>
 
       <div className="header-actions">
-        <button className="language-toggle" type="button" onClick={() => setLanguage(language === "en" ? "uk" : "en")}>
-          <span>{languages[language]}</span>
-        </button>
+        <div className={`language-switch is-${language}`} role="group" aria-label={t.accessibility.language}>
+          <span className="language-switch-indicator" aria-hidden="true" />
+          {Object.entries(languages).map(([code, label]) => (
+            <button
+              className={language === code ? "is-active" : ""}
+              type="button"
+              aria-pressed={language === code}
+              onClick={() => setLanguage(code)}
+              key={code}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
         <button className="nav-cta" type="button" onClick={openDemo}>
           {t.cta}
         </button>
@@ -543,7 +421,6 @@ function Hero({ t, openDemo, reducedMotion }) {
             {t.presentation.label}
           </a>
         </div>
-        <p className="hero-proof">{t.hero.proof}</p>
       </Reveal>
     </section>
   );
@@ -579,29 +456,11 @@ function SiteBackground() {
   );
 }
 
-function ProductIntro({ t }) {
-  return (
-    <section id="product" className="section product-section">
-      <div className="section-inner product-layout">
-        <SectionHeader eyebrow={t.product.eyebrow} title={t.product.title} text={t.product.text} />
-        <div className="product-card-stack">
-          {t.product.cards.map((item, index) => (
-            <Reveal className="product-line" delay={index * 0.04} key={item}>
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              <p>{item}</p>
-            </Reveal>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function AudienceSection({ t }) {
   return (
     <section id="audience" className="section section-muted">
       <div className="section-inner">
-        <SectionHeader eyebrow={t.audience.eyebrow} title={t.audience.title} text={t.audience.lead} />
+        <SectionHeader eyebrow={t.audience.eyebrow} title={t.audience.title} />
         <div className="card-grid three">
           {t.audience.items.map((item, index) => {
             const Icon = audienceIcons[index % audienceIcons.length];
@@ -648,7 +507,7 @@ function BenefitsSection({ t }) {
             const Icon = benefitIcons[index % benefitIcons.length];
             return (
               <Reveal className="info-card benefit-card" delay={index * 0.05} key={item.title}>
-                <span className="card-index">{String(index + 1).padStart(2, "0")}</span>
+                <strong className="benefit-metric">{item.metric}</strong>
                 <Icon className="card-icon" size={22} aria-hidden="true" />
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>
@@ -718,7 +577,6 @@ function DemoSection({ t, openDemo }) {
         <Reveal delay={0.06} className="demo-side">
           <span>{t.demo.videoLabel}</span>
           <strong>{t.demo.meta}</strong>
-          <p>{t.demo.detail}</p>
           <div className="demo-actions">
             <button className="primary-button" type="button" onClick={openDemo}>
               {t.cta}
@@ -762,97 +620,16 @@ function DemoSection({ t, openDemo }) {
   );
 }
 
-function LinkedInSection({ t, language }) {
-  const [posts, setPosts] = useState([]);
-  const [status, setStatus] = useState("loading");
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    async function loadPosts() {
-      try {
-        const response = await fetch(linkedInFeedEndpoint, {
-          headers: { Accept: "application/json" },
-          signal: controller.signal
-        });
-
-        if (!response.ok) {
-          throw new Error("LinkedIn feed is unavailable");
-        }
-
-        const data = await response.json();
-        const nextPosts = Array.isArray(data.posts) ? data.posts.slice(0, 3) : [];
-        setPosts(nextPosts);
-        setStatus(nextPosts.length ? "ready" : "empty");
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          setStatus("error");
-        }
-      }
-    }
-
-    loadPosts();
-    return () => controller.abort();
-  }, []);
-
-  const formatDate = (timestamp) =>
-    new Intl.DateTimeFormat(language === "uk" ? "uk-UA" : "en-GB", {
-      day: "numeric",
-      month: "short",
-      year: "numeric"
-    }).format(new Date(timestamp));
-
+function LinkedInSection({ t }) {
   return (
     <section id="linkedin" className="section linkedin-section">
-      <div className="section-inner">
-        <div className="linkedin-heading">
-          <SectionHeader eyebrow={t.linkedin.eyebrow} title={t.linkedin.title} text={t.linkedin.text} />
-          <a className="linkedin-follow" href={linkedInUrl} target="_blank" rel="noreferrer">
-            <Linkedin size={18} aria-hidden="true" />
-            {t.linkedin.follow}
-            <ArrowUpRight size={17} aria-hidden="true" />
-          </a>
-        </div>
-
-        {status === "loading" && (
-          <div className="linkedin-loading" role="status">
-            <Loader2 className="spin" size={18} aria-hidden="true" />
-            {t.linkedin.loading}
-          </div>
-        )}
-
-        {status === "ready" && (
-          <div className="linkedin-grid">
-            {posts.map((post, index) => (
-              <Reveal className="linkedin-card-wrap" delay={index * 0.05} key={post.id}>
-                <article className="linkedin-card">
-                  <div className="linkedin-card-top">
-                    <span className="linkedin-mark">
-                      <Linkedin size={18} aria-hidden="true" />
-                    </span>
-                    <time dateTime={new Date(post.publishedAt).toISOString()}>{formatDate(post.publishedAt)}</time>
-                  </div>
-                  <p>{post.text}</p>
-                  <a href={post.url} target="_blank" rel="noreferrer" aria-label={`${t.linkedin.readPost}: ${post.text}`}>
-                    {t.linkedin.readPost}
-                    <ArrowUpRight size={17} aria-hidden="true" />
-                  </a>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        )}
-
-        {(status === "error" || status === "empty") && (
-          <div className="linkedin-fallback">
-            <Linkedin size={24} aria-hidden="true" />
-            <p>{t.linkedin.fallback}</p>
-            <a href={linkedInUrl} target="_blank" rel="noreferrer">
-              {t.linkedin.follow}
-              <ArrowUpRight size={17} aria-hidden="true" />
-            </a>
-          </div>
-        )}
+      <div className="section-inner linkedin-compact">
+        <SectionHeader eyebrow={t.linkedin.eyebrow} title={t.linkedin.title} />
+        <a className="linkedin-follow" href={linkedInUrl} target="_blank" rel="noreferrer">
+          <Linkedin size={18} aria-hidden="true" />
+          {t.linkedin.follow}
+          <ArrowUpRight size={17} aria-hidden="true" />
+        </a>
       </div>
     </section>
   );
@@ -906,19 +683,10 @@ function Footer({ nav, t, openDemo }) {
         <span />
       </div>
 
-      <div className="footer-statement">
-        <p>{t.footer.label}</p>
-        <h2>{t.footer.title}</h2>
-        <button className="primary-button" type="button" onClick={openDemo}>
-          {t.cta}
-          <ArrowRight size={18} aria-hidden="true" />
-        </button>
-      </div>
-
       <div className="footer-main">
         <div className="footer-brand-block">
           <a className="footer-brand" href="#top">
-            <img src={publicAsset("brand/logo.svg")} alt="Kreslix" />
+            <img src={publicAsset("brand/logo.svg")} alt="kreslix" />
           </a>
           <p>{t.footer.description}</p>
         </div>
@@ -950,7 +718,7 @@ function Footer({ nav, t, openDemo }) {
       </div>
 
       <div className="footer-bottom">
-        <p>© {year} Kreslix. {t.footer.rights}</p>
+        <p>© {year} kreslix. {t.footer.rights}</p>
         <div>
           <a href={publicAsset("privacy.html")}>{t.footer.privacy}</a>
           <a href="#top">
@@ -995,14 +763,7 @@ function DemoForm({ t, language, titleId, compact = false }) {
   const [formData, setFormData] = useState({
     name: "",
     company: "",
-    role: "",
-    email: "",
-    contact: "",
-    location: "",
-    projects: "",
-    tools: "",
-    bottleneck: "",
-    pilot: ""
+    contact: ""
   });
 
   const updateField = (event) => {
@@ -1016,7 +777,7 @@ function DemoForm({ t, language, titleId, compact = false }) {
     event.preventDefault();
     setMessage("");
 
-    if (!formData.name || !formData.company || !formData.email || !formData.bottleneck) {
+    if (!formData.name || !formData.company || !formData.contact) {
       setStatus("error");
       setMessage(t.form.required);
       return;
@@ -1040,14 +801,7 @@ function DemoForm({ t, language, titleId, compact = false }) {
       setFormData({
         name: "",
         company: "",
-        role: "",
-        email: "",
-        contact: "",
-        location: "",
-        projects: "",
-        tools: "",
-        bottleneck: "",
-        pilot: ""
+        contact: ""
       });
     } catch (error) {
       setStatus("error");
@@ -1066,49 +820,15 @@ function DemoForm({ t, language, titleId, compact = false }) {
       <div className="form-grid">
         <Input label={t.form.fields.name} name="name" value={formData.name} onChange={updateField} required />
         <Input label={t.form.fields.company} name="company" value={formData.company} onChange={updateField} required />
-        <Input label={t.form.fields.role} name="role" value={formData.role} onChange={updateField} />
-        <Input label={t.form.fields.email} name="email" value={formData.email} onChange={updateField} type="email" required />
-        {!compact && (
-          <>
-            <Input label={t.form.fields.contact} name="contact" value={formData.contact} onChange={updateField} />
-            <Input label={t.form.fields.location} name="location" value={formData.location} onChange={updateField} />
-          </>
-        )}
-      </div>
-
-      <Input
-        label={t.form.fields.projects}
-        name="projects"
-        value={formData.projects}
-        onChange={updateField}
-        placeholder={t.form.placeholders.projects}
-      />
-      {!compact && (
         <Input
-          label={t.form.fields.tools}
-          name="tools"
-          value={formData.tools}
+          label={t.form.fields.contact}
+          name="contact"
+          value={formData.contact}
           onChange={updateField}
-          placeholder={t.form.placeholders.tools}
+          placeholder={t.form.placeholders.contact}
+          required
         />
-      )}
-      <TextArea
-        label={t.form.fields.bottleneck}
-        name="bottleneck"
-        value={formData.bottleneck}
-        onChange={updateField}
-        placeholder={t.form.placeholders.bottleneck}
-        required
-      />
-      {!compact && (
-        <TextArea
-          label={t.form.fields.pilot}
-          name="pilot"
-          value={formData.pilot}
-          onChange={updateField}
-          placeholder={t.form.placeholders.pilot}
-        />
-      )}
+      </div>
 
       {message && <p className={`form-message ${status}`}>{message}</p>}
 
@@ -1137,18 +857,6 @@ function Input({ label, name, value, onChange, type = "text", placeholder = "", 
         {required ? " *" : ""}
       </span>
       <input name={name} value={value} onChange={onChange} type={type} placeholder={placeholder} required={required} />
-    </label>
-  );
-}
-
-function TextArea({ label, name, value, onChange, placeholder = "", required = false }) {
-  return (
-    <label className="field">
-      <span>
-        {label}
-        {required ? " *" : ""}
-      </span>
-      <textarea name={name} value={value} onChange={onChange} placeholder={placeholder} required={required} rows={4} />
     </label>
   );
 }

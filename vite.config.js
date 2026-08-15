@@ -1,9 +1,8 @@
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
-import { fetchLinkedInPosts } from "./lib/linkedin.js";
 
-const requiredFields = ["name", "company", "email", "bottleneck"];
+const requiredFields = ["name", "company", "contact"];
 
 function clean(value) {
   return String(value || "").trim();
@@ -15,18 +14,11 @@ function formatLead(data) {
     ["Source", data.source],
     ["Name", data.name],
     ["Company", data.company],
-    ["Role", data.role],
-    ["Email", data.email],
-    ["Telegram / phone", data.contact],
-    ["Country / city", data.location],
-    ["Projects per month", data.projects],
-    ["Current tools", data.tools],
-    ["Biggest bottleneck", data.bottleneck],
-    ["Useful pilot outcome", data.pilot]
+    ["Email / phone", data.contact]
   ];
 
   return [
-    "New Kreslix demo request",
+    "New kreslix call request",
     "",
     ...rows.map(([label, value]) => `${label}: ${clean(value) || "-"}`)
   ].join("\n");
@@ -58,30 +50,6 @@ function apiDevPlugin() {
   return {
     name: "kreslix-api-dev",
     configureServer(server) {
-      server.middlewares.use("/api/linkedin-posts", async (req, res) => {
-        if (req.method === "OPTIONS") {
-          res.statusCode = 204;
-          res.end();
-          return;
-        }
-
-        if (req.method !== "GET") {
-          sendJson(res, 405, { ok: false, error: "Method not allowed" });
-          return;
-        }
-
-        try {
-          const feed = await fetchLinkedInPosts({ count: 3 });
-          res.setHeader("Cache-Control", "no-store");
-          sendJson(res, 200, feed);
-        } catch (error) {
-          sendJson(res, Number.isInteger(error.status) ? error.status : 502, {
-            ok: false,
-            error: error.status === 501 ? "LinkedIn is not configured" : "LinkedIn feed is unavailable"
-          });
-        }
-      });
-
       server.middlewares.use("/api/demo", async (req, res) => {
         if (req.method === "OPTIONS") {
           res.statusCode = 204;

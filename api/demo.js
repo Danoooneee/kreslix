@@ -1,4 +1,4 @@
-const requiredFields = ["name", "company", "email", "bottleneck"];
+const requiredFields = ["name", "company", "contact"];
 
 function readBody(req) {
   if (!req.body) return {};
@@ -22,18 +22,11 @@ function formatLead(data) {
     ["Source", data.source],
     ["Name", data.name],
     ["Company", data.company],
-    ["Role", data.role],
-    ["Email", data.email],
-    ["Telegram / phone", data.contact],
-    ["Country / city", data.location],
-    ["Projects per month", data.projects],
-    ["Current tools", data.tools],
-    ["Biggest bottleneck", data.bottleneck],
-    ["Useful pilot outcome", data.pilot]
+    ["Email / phone", data.contact]
   ];
 
   return [
-    "New Kreslix demo request",
+    "New kreslix call request",
     "",
     ...rows.map(([label, value]) => `${label}: ${clean(value) || "-"}`)
   ].join("\n");

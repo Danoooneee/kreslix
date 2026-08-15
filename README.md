@@ -1,6 +1,6 @@
-# Kreslix landing page
+# kreslix landing page
 
-One-page Vite + React landing page for Kreslix with English/Ukrainian content, anchor navigation, Grunt Grotesk headings, Fixel body typography, Motion animations, an interactive cursor-follow hero, product demo video, a Google Drive presentation, LinkedIn updates, and a Telegram-ready demo request flow.
+One-page Vite + React landing page for kreslix with English/Ukrainian content, anchor navigation, Grunt Grotesk headings, Fixel body typography, Motion animations, an interactive cursor-follow hero, product demo video, a Google Drive presentation, a LinkedIn CTA, and a Telegram-ready call request flow.
 
 ## Run locally
 
@@ -25,9 +25,9 @@ pnpm build:pages
 
 The source application lives in `app/`. Public media stays in `public/` and is referenced directly by the Pages build, avoiding duplicate copies of the video and presentation.
 
-## Telegram demo requests
+## Telegram call requests
 
-The frontend posts demo requests to `/api/demo`. Configure these environment variables on your deployment platform:
+The frontend posts call requests to `/api/demo`. Configure these environment variables on your deployment platform:
 
 ```bash
 TELEGRAM_BOT_TOKEN=...
@@ -41,7 +41,7 @@ The token is used only server-side in `api/demo.js`.
 The optimized product demo video used by the site is stored at:
 
 ```bash
-public/media/kreslix-demo-web.mp4
+public/media/kreslix-demo-hq-v2.mp4
 ```
 
 The high-resolution source file remains local at `public/media/kreslix-demo.mp4` and is excluded from Git.
@@ -54,28 +54,9 @@ Presentation buttons open the shared Google Drive presentation in a new browser 
 https://drive.google.com/file/d/1qgRQitgBYbfbETDYNzBT8k0ASHTSZtRJ/view?usp=sharing
 ```
 
-## LinkedIn updates
+## LinkedIn
 
-The frontend requests `/api/linkedin-posts`, which reads the latest public Kreslix organization posts through LinkedIn's server-side Posts API. Configure:
-
-```bash
-LINKEDIN_ACCESS_TOKEN=...
-LINKEDIN_ORGANIZATION_ID=...
-LINKEDIN_VANITY_NAME=kreslix
-LINKEDIN_API_VERSION=202605
-```
-
-The access token needs LinkedIn's `r_organization_social` permission and the authenticated member must have an eligible Kreslix page role. Keep this token server-side.
-
-For GitHub Pages, add `LINKEDIN_ACCESS_TOKEN` and, preferably, `LINKEDIN_ORGANIZATION_ID` as repository Actions secrets. The `Sync LinkedIn posts` workflow refreshes `public/data/linkedin-posts.json` every six hours. The Pages build reads this JSON directly, so no secret is exposed to visitors.
-
-If the static site and API are hosted on different origins, build the frontend with:
-
-```bash
-VITE_LINKEDIN_FEED_ENDPOINT=https://your-api.example.com/api/linkedin-posts
-```
-
-Without a configured feed endpoint, the section falls back to a direct link to the Kreslix LinkedIn page.
+The landing page links directly to the kreslix company page on LinkedIn.
 
 ## Typography
 

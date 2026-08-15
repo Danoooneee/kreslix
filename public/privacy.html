@@ -3,8 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Kreslix privacy policy." />
-    <title>Privacy Policy | Kreslix</title>
+    <meta name="description" content="kreslix privacy policy." />
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <title>Privacy Policy | kreslix</title>
     <style>
       :root {
         color-scheme: dark;
@@ -73,26 +74,37 @@
         gap: 14px;
       }
 
-      .language-toggle {
-        min-width: 52px;
+      .language-switch {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        min-width: 92px;
         min-height: 42px;
-        padding: 0 14px;
+        padding: 3px;
         border: 1px solid var(--line);
         border-radius: 999px;
         background: rgba(244, 240, 230, 0.04);
+      }
+
+      .language-switch button {
+        min-width: 40px;
+        border: 0;
+        border-radius: 999px;
+        background: transparent;
         color: var(--ink);
         cursor: pointer;
         font: inherit;
         font-size: 0.76rem;
         font-weight: 700;
-        transition: border-color 180ms ease, background 180ms ease, color 180ms ease;
+        transition: background 180ms ease, color 180ms ease;
       }
 
-      .language-toggle:hover,
-      .language-toggle:focus-visible {
-        border-color: rgba(204, 255, 0, 0.45);
-        background: rgba(204, 255, 0, 0.08);
-        color: var(--accent);
+      .language-switch button[aria-pressed="true"] {
+        background: var(--accent);
+        color: var(--bg);
+      }
+
+      .language-switch button:focus-visible {
+        box-shadow: 0 0 0 2px rgba(204, 255, 0, 0.45);
         outline: none;
       }
 
@@ -196,9 +208,12 @@
   </head>
   <body>
     <header>
-      <a class="brand" href="../">KRESLIX</a>
+      <a class="brand" href="../">kreslix</a>
       <div class="header-actions">
-        <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch language">EN</button>
+        <div class="language-switch" role="group" aria-label="Choose language">
+          <button type="button" data-set-language="en" aria-pressed="true">EN</button>
+          <button type="button" data-set-language="uk" aria-pressed="false">UA</button>
+        </div>
         <a class="back" id="back-link" href="../">← Back to website</a>
       </div>
     </header>
@@ -206,15 +221,15 @@
     <main data-language="en">
       <p class="eyebrow">// Legal</p>
       <h1>Privacy Policy</h1>
-      <p class="updated">Last updated: 24 July 2026</p>
+      <p class="updated">Last updated: 15 August 2026</p>
 
       <div class="policy">
         <section>
           <h2>01 / Scope</h2>
           <div>
             <p>
-              This policy explains how Kreslix handles personal information submitted through this website,
-              including demo requests and direct business enquiries.
+              This policy explains how kreslix handles personal information submitted through this website,
+              including call requests and direct business enquiries.
             </p>
           </div>
         </section>
@@ -222,11 +237,10 @@
         <section>
           <h2>02 / Data we collect</h2>
           <div>
-            <p>When you request a demo, we may collect:</p>
+            <p>When you request a call, we may collect:</p>
             <ul>
-              <li>your name, company, role, email, phone number, or Telegram contact;</li>
-              <li>your country or city;</li>
-              <li>information about your projects, tools, workflow, and business needs;</li>
+              <li>your name and company;</li>
+              <li>your email address or phone number;</li>
               <li>basic technical information required to operate and secure the website.</li>
             </ul>
           </div>
@@ -236,8 +250,8 @@
           <h2>03 / How we use data</h2>
           <div>
             <p>
-              We use this information to respond to enquiries, prepare relevant demonstrations or pilot
-              proposals, improve Kreslix, maintain website security, and meet applicable legal obligations.
+              We use this information to respond to enquiries, prepare relevant follow-up or pilot
+              proposals, improve kreslix, maintain website security, and meet applicable legal obligations.
               We do not sell personal information.
             </p>
           </div>
@@ -260,7 +274,7 @@
             <p>
               Information may be processed by providers that support hosting, communications, analytics, or
               security. They receive only the information necessary to provide their service and are expected
-              to protect it. Demo form notifications may be delivered through Telegram.
+              to protect it. Call request notifications may be delivered through Telegram.
             </p>
           </div>
         </section>
@@ -300,9 +314,9 @@
           <h2>09 / Contact</h2>
           <div>
             <p>
-              For a privacy request, contact Kreslix through the contact details used in your existing
+              For a privacy request, contact kreslix through the contact details used in your existing
               correspondence or through the
-              <a href="https://www.linkedin.com/company/kreslix">Kreslix LinkedIn page</a>.
+              <a href="https://www.linkedin.com/company/kreslix">kreslix LinkedIn page</a>.
             </p>
           </div>
         </section>
@@ -312,15 +326,15 @@
     <main data-language="uk" hidden>
       <p class="eyebrow">// Правова інформація</p>
       <h1>Політика конфіденційності</h1>
-      <p class="updated">Останнє оновлення: 24 липня 2026 року</p>
+      <p class="updated">Останнє оновлення: 15 серпня 2026 року</p>
 
       <div class="policy">
         <section>
           <h2>01 / Сфера дії</h2>
           <div>
             <p>
-              Ця політика пояснює, як Kreslix обробляє персональну інформацію, надану через цей сайт,
-              зокрема заявки на демонстрацію та прямі ділові звернення.
+              Ця політика пояснює, як kreslix обробляє персональну інформацію, надану через цей сайт,
+              зокрема заявки на дзвінок та прямі ділові звернення.
             </p>
           </div>
         </section>
@@ -328,11 +342,10 @@
         <section>
           <h2>02 / Які дані ми збираємо</h2>
           <div>
-            <p>Коли ви замовляєте демонстрацію, ми можемо отримувати:</p>
+            <p>Коли ви плануєте дзвінок, ми можемо отримувати:</p>
             <ul>
-              <li>ваше ім’я, назву компанії, посаду, електронну адресу, номер телефону або контакт у Telegram;</li>
-              <li>вашу країну або місто;</li>
-              <li>інформацію про ваші проєкти, інструменти, робочі процеси та потреби бізнесу;</li>
+              <li>ваше ім’я та назву компанії;</li>
+              <li>вашу електронну адресу або номер телефону;</li>
               <li>базову технічну інформацію, необхідну для роботи й захисту сайту.</li>
             </ul>
           </div>
@@ -342,8 +355,8 @@
           <h2>03 / Як ми використовуємо дані</h2>
           <div>
             <p>
-              Ми використовуємо цю інформацію, щоб відповідати на звернення, готувати релевантні демонстрації
-              або пропозиції пілотних проєктів, удосконалювати Kreslix, підтримувати безпеку сайту та виконувати
+              Ми використовуємо цю інформацію, щоб відповідати на звернення, готувати релевантні пропозиції
+              пілотних проєктів, удосконалювати kreslix, підтримувати безпеку сайту та виконувати
               вимоги законодавства. Ми не продаємо персональну інформацію.
             </p>
           </div>
@@ -366,7 +379,7 @@
             <p>
               Інформацію можуть обробляти постачальники, які забезпечують хостинг, комунікації, аналітику або
               безпеку. Вони отримують лише дані, необхідні для надання відповідної послуги, і повинні захищати
-              їх. Сповіщення про заявки на демонстрацію можуть надсилатися через Telegram.
+              їх. Сповіщення про заявки на дзвінок можуть надсилатися через Telegram.
             </p>
           </div>
         </section>
@@ -406,9 +419,9 @@
           <h2>09 / Контакти</h2>
           <div>
             <p>
-              Щоб подати запит щодо конфіденційності, зв’яжіться з Kreslix за контактами з вашого поточного
+              Щоб подати запит щодо конфіденційності, зв’яжіться з kreslix за контактами з вашого поточного
               листування або через
-              <a href="https://www.linkedin.com/company/kreslix">сторінку Kreslix у LinkedIn</a>.
+              <a href="https://www.linkedin.com/company/kreslix">сторінку kreslix у LinkedIn</a>.
             </p>
           </div>
         </section>
@@ -416,17 +429,17 @@
     </main>
 
     <footer data-language="en">
-      <span>© 2026 Kreslix</span>
+      <span>© 2026 kreslix</span>
       <span>AI platform for internal electrical network design</span>
     </footer>
 
     <footer data-language="uk" hidden>
-      <span>© 2026 Kreslix</span>
+      <span>© 2026 kreslix</span>
       <span>AI-платформа для проєктування внутрішніх електромереж</span>
     </footer>
 
     <script>
-      const languageToggle = document.querySelector("#language-toggle");
+      const languageButtons = document.querySelectorAll("[data-set-language]");
       const backLink = document.querySelector("#back-link");
       const description = document.querySelector('meta[name="description"]');
       const languageBlocks = document.querySelectorAll("[data-language]");
@@ -440,23 +453,23 @@
           block.hidden = block.dataset.language !== nextLanguage;
         });
 
+        languageButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.setLanguage === nextLanguage));
+        });
+
         if (nextLanguage === "uk") {
-          document.title = "Політика конфіденційності | Kreslix";
-          description.setAttribute("content", "Політика конфіденційності Kreslix.");
-          languageToggle.textContent = "UA";
-          languageToggle.setAttribute("aria-label", "Перемкнути мову");
+          document.title = "Політика конфіденційності | kreslix";
+          description.setAttribute("content", "Політика конфіденційності kreslix.");
           backLink.textContent = "← Повернутися на сайт";
         } else {
-          document.title = "Privacy Policy | Kreslix";
-          description.setAttribute("content", "Kreslix privacy policy.");
-          languageToggle.textContent = "EN";
-          languageToggle.setAttribute("aria-label", "Switch language");
+          document.title = "Privacy Policy | kreslix";
+          description.setAttribute("content", "kreslix privacy policy.");
           backLink.textContent = "← Back to website";
         }
       }
 
-      languageToggle.addEventListener("click", () => {
-        applyLanguage(document.documentElement.lang === "uk" ? "en" : "uk");
+      languageButtons.forEach((button) => {
+        button.addEventListener("click", () => applyLanguage(button.dataset.setLanguage));
       });
 
       applyLanguage(localStorage.getItem("kreslix-language"));
