@@ -506,18 +506,24 @@ function ProblemSection({ t }) {
 
 function BenefitsSection({ t }) {
   return (
-    <section id="benefits" className="section section-muted">
+    <section id="benefits" className="section section-muted benefits-section">
       <div className="section-inner">
         <SectionHeader eyebrow={t.benefits.eyebrow} title={t.benefits.title} />
-        <div className="card-grid four">
+        <div className="card-grid four benefits-grid">
           {t.benefits.items.map((item, index) => {
             const Icon = benefitIcons[index % benefitIcons.length];
             return (
               <Reveal className="info-card benefit-card" delay={index * 0.05} key={item.title}>
-                <strong className="benefit-metric">{item.metric}</strong>
-                <Icon className="card-icon" size={22} aria-hidden="true" />
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
+                <div className="benefit-card-top">
+                  <strong className="benefit-metric">{item.metric}</strong>
+                  <span className="benefit-icon" aria-hidden="true">
+                    <Icon size={19} />
+                  </span>
+                </div>
+                <div className="benefit-card-copy">
+                  <h3>{item.title}</h3>
+                  <p>{item.text}</p>
+                </div>
               </Reveal>
             );
           })}
