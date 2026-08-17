@@ -277,8 +277,9 @@ p {
 }
 
 .site-header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 50%;
   z-index: 50;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
@@ -293,6 +294,7 @@ p {
   background: rgba(9, 10, 5, 0.78);
   box-shadow: none;
   backdrop-filter: blur(20px);
+  transform: translateX(-50%);
   will-change: width, top, padding, border-radius;
   transition:
     top 620ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -541,12 +543,12 @@ textarea:focus-visible {
   grid-template-columns: minmax(0, 1fr);
   gap: clamp(24px, 4vw, 64px);
   align-items: end;
-  width: min(100% - 28px, 1360px);
-  min-height: calc(100vh - 104px);
-  margin: 18px auto 0;
-  padding: clamp(90px, 10vw, 150px) clamp(20px, 4vw, 64px) clamp(44px, 5vw, 80px);
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  margin: 0;
+  padding: clamp(110px, 11vw, 166px) 0 clamp(44px, 5vw, 80px);
   overflow: hidden;
-  border-radius: 28px;
 }
 
 .hero-section::after {
@@ -562,7 +564,10 @@ textarea:focus-visible {
 .hero-copy {
   position: relative;
   z-index: 2;
-  max-width: 1160px;
+  width: min(100% - 28px, 1360px);
+  max-width: none;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 64px);
   min-width: 0;
 }
 
@@ -1767,7 +1772,6 @@ textarea::placeholder {
 }
 
 @media (max-width: 720px) {
-  .hero-section,
   .section-inner,
   .site-footer {
     width: min(100% - 20px, var(--max));
@@ -1813,10 +1817,16 @@ textarea::placeholder {
   }
 
   .hero-section {
-    min-height: auto;
-    margin-top: 12px;
-    padding: 42px 10px 18px;
-    border-radius: 20px;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100svh;
+    margin-top: 0;
+    padding: 108px 0 30px;
+  }
+
+  .hero-copy {
+    width: 100%;
+    padding: 0 20px;
   }
 
   .hero-section .eyebrow {
