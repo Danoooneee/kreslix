@@ -1,4 +1,4 @@
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import {
   ArrowRight,
   ArrowUpRight,
@@ -434,10 +434,43 @@ function Hero({ t, openDemo, reducedMotion }) {
 }
 
 function SiteBackground() {
+  const reducedMotion = useReducedMotion();
+  const { scrollYProgress } = useScroll();
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 72,
+    damping: 24,
+    mass: 0.32
+  });
+  const networkY = useTransform(smoothProgress, [0, 1], ["-3%", "9%"]);
+  const networkX = useTransform(smoothProgress, [0, 1], ["-1.5%", "2.5%"]);
+  const networkRotate = useTransform(smoothProgress, [0, 1], [-0.8, 1.2]);
+  const auroraPrimaryY = useTransform(smoothProgress, [0, 1], ["-12%", "34%"]);
+  const auroraPrimaryX = useTransform(smoothProgress, [0, 1], ["-7%", "9%"]);
+  const auroraSecondaryY = useTransform(smoothProgress, [0, 1], ["20%", "-24%"]);
+  const auroraSecondaryX = useTransform(smoothProgress, [0, 1], ["8%", "-5%"]);
+  const sweepX = useTransform(smoothProgress, [0, 1], ["-16%", "320%"]);
+  const orbitRotate = useTransform(smoothProgress, [0, 1], [-12, 20]);
+
+  const motionStyle = (style) => (reducedMotion ? undefined : style);
+
   return (
     <div className="site-background" aria-hidden="true">
-      <div className="site-background-sweep" />
-      <svg className="site-background-network" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+      <motion.div
+        className="site-background-aurora site-background-aurora-primary"
+        style={motionStyle({ x: auroraPrimaryX, y: auroraPrimaryY })}
+      />
+      <motion.div
+        className="site-background-aurora site-background-aurora-secondary"
+        style={motionStyle({ x: auroraSecondaryX, y: auroraSecondaryY })}
+      />
+      <motion.div className="site-background-orbit" style={motionStyle({ rotate: orbitRotate })} />
+      <motion.div className="site-background-sweep" style={motionStyle({ x: sweepX })} />
+      <motion.svg
+        className="site-background-network"
+        viewBox="0 0 1600 1000"
+        preserveAspectRatio="xMidYMid slice"
+        style={motionStyle({ x: networkX, y: networkY, rotate: networkRotate })}
+      >
         <path className="ambient-route ambient-route-a" d="M-80 760H190V640H420V718H690V520H914V610H1200V420H1680" />
         <path className="ambient-route ambient-route-b" d="M-40 214H250V304H520V168H810V318H1090V206H1640" />
         <path className="ambient-route ambient-route-c" d="M1260 -40V136H1142V340H1308V548H1180V1040" />
@@ -458,7 +491,7 @@ function SiteBackground() {
           <circle cx="810" cy="318" r="5" />
           <circle cx="1090" cy="206" r="5" />
         </g>
-      </svg>
+      </motion.svg>
     </div>
   );
 }
