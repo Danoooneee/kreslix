@@ -12,6 +12,8 @@ await mkdir(pagesAssets, { recursive: true });
 await cp(resolve(distRoot, "pages-assets"), pagesAssets, { recursive: true });
 await mkdir(pagesBrand, { recursive: true });
 await cp(resolve(distRoot, "brand/logo.svg"), resolve(pagesBrand, "logo.svg"));
+await cp(resolve(distRoot, "brand/favicon-dark.svg"), resolve(pagesBrand, "favicon-dark.svg"));
+await cp(resolve(distRoot, "brand/favicon-light.svg"), resolve(pagesBrand, "favicon-light.svg"));
 
 const indexHtml = await readFile(resolve(distRoot, "index.html"), "utf8");
 await writeFile(resolve(projectRoot, "index.html"), indexHtml);
