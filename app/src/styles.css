@@ -611,16 +611,6 @@ textarea:focus-visible {
   overflow: hidden;
 }
 
-.hero-section::after {
-  position: absolute;
-  inset: auto 0 0;
-  z-index: -1;
-  height: 42%;
-  pointer-events: none;
-  background: linear-gradient(180deg, transparent, rgba(7, 8, 4, 0.92) 78%);
-  content: "";
-}
-
 .hero-copy {
   position: relative;
   z-index: 2;
@@ -658,23 +648,6 @@ textarea:focus-visible {
   inset: 0;
   z-index: -2;
   overflow: hidden;
-  background:
-    linear-gradient(rgba(244, 240, 230, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(244, 240, 230, 0.046) 1px, transparent 1px),
-    linear-gradient(115deg, rgba(204, 255, 0, 0.12), transparent 32%),
-    linear-gradient(245deg, rgba(24, 216, 245, 0.07), transparent 42%),
-    rgba(7, 8, 4, 0.78);
-  background-size: 42px 42px, 42px 42px, 100% 100%, 100% 100%, 100% 100%;
-}
-
-.hero-background::before {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(90deg, rgba(7, 8, 4, 0.95), transparent 24%, transparent 70%, rgba(7, 8, 4, 0.7)),
-    linear-gradient(180deg, rgba(7, 8, 4, 0.36), transparent 36%, rgba(7, 8, 4, 0.74));
-  content: "";
 }
 
 .hero-nexus {
@@ -700,25 +673,6 @@ textarea:focus-visible {
   position: relative;
   isolation: isolate;
   padding: clamp(72px, 9vw, 126px) 0;
-}
-
-.product-section {
-  background:
-    linear-gradient(180deg, transparent 0%, rgba(7, 9, 5, 0.5) 18%, rgba(7, 9, 5, 0.5) 82%, transparent 100%),
-    linear-gradient(105deg, rgba(204, 255, 0, 0.045), transparent 31%);
-}
-
-.section-muted {
-  background:
-    linear-gradient(180deg, transparent 0%, rgba(11, 13, 9, 0.64) 16%, rgba(11, 13, 9, 0.64) 84%, transparent 100%),
-    linear-gradient(115deg, rgba(24, 216, 245, 0.045), transparent 32%, rgba(204, 255, 0, 0.025) 76%, transparent);
-}
-
-.problem-section {
-  background:
-    linear-gradient(180deg, transparent 0%, rgba(6, 8, 5, 0.5) 18%, rgba(6, 8, 5, 0.5) 82%, transparent 100%),
-    linear-gradient(250deg, rgba(255, 112, 73, 0.035), transparent 28%),
-    linear-gradient(110deg, transparent 60%, rgba(204, 255, 0, 0.028));
 }
 
 .section-inner {
@@ -964,22 +918,6 @@ textarea:focus-visible {
   min-height: 100vh;
   padding: clamp(72px, 8vw, 118px) 0 clamp(42px, 5vw, 76px);
   overflow: clip;
-  background:
-    radial-gradient(circle at 84% 18%, rgba(204, 255, 0, 0.12), transparent 30%),
-    linear-gradient(180deg, transparent 0%, rgba(3, 4, 2, 0.9) 12%, rgba(3, 4, 2, 0.9) 88%, transparent 100%),
-    linear-gradient(180deg, rgba(244, 240, 230, 0.035), transparent 24%);
-}
-
-.demo-section::before {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background:
-    linear-gradient(rgba(244, 240, 230, 0.032) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(244, 240, 230, 0.026) 1px, transparent 1px);
-  background-size: 44px 44px;
-  content: "";
 }
 
 .demo-intro {
@@ -1188,9 +1126,6 @@ textarea:focus-visible {
 
 .linkedin-section {
   overflow: hidden;
-  background:
-    linear-gradient(180deg, transparent 0%, rgba(8, 11, 7, 0.82) 18%, rgba(8, 11, 7, 0.82) 84%, transparent),
-    radial-gradient(circle at 84% 20%, rgba(24, 119, 242, 0.12), transparent 28%);
 }
 
 .linkedin-heading {
@@ -1363,13 +1298,6 @@ textarea:focus-visible {
 
 .linkedin-fallback > svg {
   color: #75b3ff;
-}
-
-.final-section {
-  background:
-    linear-gradient(180deg, transparent 0%, rgba(14, 15, 9, 0.62) 18%, rgba(14, 15, 9, 0.62) 100%),
-    linear-gradient(135deg, rgba(204, 255, 0, 0.11), transparent 34%),
-    linear-gradient(250deg, rgba(24, 216, 245, 0.06), transparent 34%);
 }
 
 @keyframes ambient-flow {
