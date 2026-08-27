@@ -23,7 +23,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 const publicAsset = (path) => `${import.meta.env.VITE_STATIC_BASE || import.meta.env.BASE_URL}${path}`;
 const presentationUrl = "https://drive.google.com/file/d/1qgRQitgBYbfbETDYNzBT8k0ASHTSZtRJ/view?usp=sharing";
 const linkedInUrl = "https://www.linkedin.com/company/kreslix";
-const linkedInFeedEndpoint = publicAsset("data/linkedin-posts.json");
+const linkedInFeedEndpoint =
+  import.meta.env.VITE_LINKEDIN_FEED_ENDPOINT ||
+  (import.meta.env.BASE_URL === "/kreslix/" ? publicAsset("data/linkedin-posts.json") : "/api/linkedin-posts");
 const languages = {
   en: "EN",
   uk: "UA"

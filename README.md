@@ -56,7 +56,18 @@ https://drive.google.com/file/d/1qgRQitgBYbfbETDYNzBT8k0ASHTSZtRJ/view?usp=shari
 
 ## LinkedIn updates
 
-The landing page reads the three latest posts from `public/data/linkedin-posts.json`. GitHub Actions refreshes this file every six hours, while an open site tab checks for a newer feed every 15 minutes.
+On Vercel, the landing page reads the three latest company posts from `/api/linkedin-posts`. The access token stays in the server-side Vercel Function and the response is cached for one hour.
+
+Configure these variables in **Vercel → Project → Settings → Environment Variables**, then redeploy:
+
+```bash
+LINKEDIN_ACCESS_TOKEN=...
+LINKEDIN_ORGANIZATION_ID=... # optional when the organization can be resolved from the vanity name
+LINKEDIN_VANITY_NAME=kreslix
+LINKEDIN_API_VERSION=202608
+```
+
+GitHub Pages uses `public/data/linkedin-posts.json` as a static fallback. GitHub Actions refreshes this file every six hours, while an open site tab checks for a newer feed every 15 minutes.
 
 Configure these repository Actions secrets:
 
@@ -65,7 +76,7 @@ LINKEDIN_ACCESS_TOKEN=...
 LINKEDIN_ORGANIZATION_ID=... # optional when the organization can be resolved from the vanity name
 ```
 
-The token needs LinkedIn's `r_organization_social` permission and stays inside GitHub Actions. It is never included in the browser bundle. The workflow can also be started manually from **Actions → Sync LinkedIn posts → Run workflow**.
+The token needs LinkedIn's `r_organization_social` permission and must belong to a member who can administer the kreslix company page. It stays inside Vercel or GitHub Actions and is never included in the browser bundle. The workflow can also be started manually from **Actions → Sync LinkedIn posts → Run workflow**.
 
 ## Typography
 
